@@ -15,6 +15,15 @@ use Inertia\Inertia;
 |
 */
 
+//test middleware spatie
+Route::get('admin', function () {
+    return 'ini admin';
+})->middleware('role:admin');
+
+Route::get('user', function () {
+    return 'ini user';
+})->middleware('role:user');
+
 Route::get('/', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
