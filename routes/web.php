@@ -24,13 +24,32 @@ Route::get('user', function () {
     return 'ini user';
 })->middleware('role:user');
 
-Route::get('/', function () {
-    return Inertia::render('Welcome', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
+//////////////////////////////////////////////////////////////////////////////////////////////
+
+// Route::get('/', function () {
+//     return Inertia::render('Welcome', [
+//         'canLogin' => Route::has('login'),
+//         'canRegister' => Route::has('register'),
+//         'laravelVersion' => Application::VERSION,
+//         'phpVersion' => PHP_VERSION,
+//     ]);
+// });
+
+Route::redirect('/', '/type/login');
+
+Route::prefix('type')->name('type.')->group(function () {
+    Route::get('/login', function () {
+        return Inertia::render('Type/Login');
+    })->name('login');
+
+    Route::get('/register', function () {
+        return Inertia::render('Type/Register');
+        // return 'udah registrasi';
+    })->name('register');
+
+    Route::get('/dashboard', function () {
+        return Inertia::render('Type/Dashboard');
+    })->name('dashboard');
 });
 
 Route::get('/dashboard', function () {
