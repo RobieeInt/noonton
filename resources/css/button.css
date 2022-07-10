@@ -1,5 +1,5 @@
 .btn-primary {
-    @apply bg-green-600 text-white hover:bg-green-700;
+    @apply bg-green-600 text-white hover:bg-white hover:text-green-600;
 }
 
 .btn-warning {
@@ -11,7 +11,7 @@
 }
 
 .btn-light-outline {
-    @apply text-white border border-white;
+    @apply text-white border border-white hover:bg-white hover:border-green-600 hover:text-black;
 }
 
 .btn-white-outline {
