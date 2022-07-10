@@ -26,7 +26,7 @@ export default function Topbar() {
                     onClick={triggerDropdown}
                 >
                     <span className="text-black text-sm font-medium">
-                        Welcome, Granola Sky
+                        Welcome, Yujang Lesmana
                     </span>
                     <div className="collapsible-dropdown flex flex-col gap-2 relative">
                         <div className="outline outline-2 outline-gray-2 p-[5px] rounded-full w-[60px] dropdown-button">

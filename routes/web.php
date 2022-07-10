@@ -50,6 +50,10 @@ Route::prefix('type')->name('type.')->group(function () {
     Route::get('/dashboard', function () {
         return Inertia::render('Type/Dashboard');
     })->name('dashboard');
+
+    Route::get('/subscriberPlan', function () {
+        return Inertia::render('Type/SubscriberPlan');
+    })->name('subscriberPlan');
 });
 
 Route::get('/dashboard', function () {

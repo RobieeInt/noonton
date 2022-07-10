@@ -1,5 +1,5 @@
 .btn-primary {
-    @apply bg-green-600 text-white;
+    @apply bg-green-600 text-white hover:bg-green-700;
 }
 
 .btn-warning {
@@ -15,5 +15,5 @@
 }
 
 .btn-white-outline {
-    @apply text-black border border-[#F1F1F1];
+    @apply text-black border border-[#F1F1F1] hover:bg-black hover:text-white;
 }
