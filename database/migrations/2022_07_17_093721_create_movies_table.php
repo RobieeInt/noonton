@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('description');
+            $table->integer('year');
             $table->string('slug');
             $table->string('category');
             $table->string('video_url');

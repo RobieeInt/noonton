@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Foundation\Application;
-use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Foundation\Application;
+use App\Http\Controllers\User\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,6 +38,15 @@ Route::get('user', function () {
 
 Route::redirect('/', '/login');
 
+
+Route::middleware(['auth', 'role:user'])->prefix('dashboard')->name('user.dashbord.')->group(function () {
+    Route::get('/', [DashboardController::class, 'index'])->name('index');
+    });
+
+// Route::get('/dashboard', function () {
+//     return Inertia::render('User/Dashboard/Index');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
 Route::prefix('type')->name('type.')->group(function () {
     Route::get('/login', function () {
         return Inertia::render('Type/Login');
@@ -60,8 +70,6 @@ Route::prefix('type')->name('type.')->group(function () {
     })->name('movie.show');
 });
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
 
 require __DIR__.'/auth.php';

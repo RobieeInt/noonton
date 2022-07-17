@@ -8,6 +8,7 @@ FeaturedMovie.propTypes = {
     thumbnail: Proptypes.string.isRequired,
     rating: Proptypes.number,
     year: Proptypes.number,
+    description: Proptypes.string,
 };
 
 export default function FeaturedMovie({
@@ -16,7 +17,8 @@ export default function FeaturedMovie({
     thumbnail,
     rating = 0,
     genres,
-    year = "XXXX",
+    year,
+    description,
 }) {
     return (
         <>
@@ -32,14 +34,20 @@ export default function FeaturedMovie({
                     <div className="p-[30px] flex items-center gap-1">
                         <img src="/icons/ic_star.svg" alt="" />
                         <span className="text-sm font-medium text-white mt-1">
-                            {rating.toFixed(1)}/5.0
+                            {rating.toFixed(1)}
                         </span>
                     </div>
                 </div>
                 {/* <!-- bottom detail --> */}
+
+                <div className="absolute bottom-0 h-[250px] content-center bg-gradient-to-t from-black justify-between items-center px-7  rounded-bl-[28px] rounded-br-[28px] ">
+                    <div className="translate-x-[500px]  text-white group-hover:translate-x-0 transition ease-in-out duration-500">
+                        {description}
+                    </div>
+                </div>
                 <div
                     className="absolute bottom-0 h-[100px] left-0 right-0 bg-gradient-to-t from-black rounded-bl-[28px]
-                                rounded-br-[28px] flex justify-between items-center px-7 h-[130px]"
+                                rounded-br-[28px] flex justify-between items-center px-7 brightness-100"
                 >
                     <div>
                         <div className="font-medium text-[22px] text-white">
@@ -52,10 +60,12 @@ export default function FeaturedMovie({
                             {genres}
                         </p>
                     </div>
+
                     <div className="translate-x-[100px] group-hover:translate-x-0 transition ease-in-out duration-500">
                         <img src="/icons/ic_play.svg" width="50" alt="" />
                     </div>
                 </div>
+
                 <Link
                     href={route("type.movie.show", slug)}
                     state={{ slug }}
