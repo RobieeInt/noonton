@@ -35,7 +35,7 @@ Route::get('user', function () {
 //     ]);
 // });
 
-Route::redirect('/', '/type/login');
+Route::redirect('/', '/login');
 
 Route::prefix('type')->name('type.')->group(function () {
     Route::get('/login', function () {
