@@ -27,12 +27,12 @@ export default function Topbar({ name }) {
                     onClick={triggerDropdown}
                 >
                     <span className="text-black text-sm font-medium">
-                        Welcome, {name}
+                        Hi, {name}
                     </span>
                     <div className="collapsible-dropdown flex flex-col gap-2 relative">
                         <div className="outline outline-2 outline-gray-2 p-[5px] rounded-full w-[60px] dropdown-button">
                             <img
-                                src="/images/avatar.png"
+                                src="/images/avatarr.jpg"
                                 className="rounded-full object-cover w-full"
                                 alt=""
                             />

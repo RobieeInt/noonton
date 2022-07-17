@@ -59,7 +59,7 @@ export default function CardMovie({
                     />
                 </div>
                 <Link
-                    href={route("type.movie.show", slug)}
+                    href={route("user.dashbord.movie.show", slug)}
                     slug={slug}
                     className="inset-0 absolute z-50"
                 ></Link>
