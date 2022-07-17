@@ -32,7 +32,7 @@ export default function Dashboard() {
                         {[1, 2, 3, 4].map((i) => (
                             <FeaturedMovie
                                 key={i}
-                                slug="Arsya Movie"
+                                slug={`Arsya-Movie-${i}`}
                                 title={`Arsya Movie ${i}`}
                                 genres="Comedy"
                                 thumbnail="https://picsum.photos/200"
@@ -50,7 +50,7 @@ export default function Dashboard() {
                         {[1, 2, 3, 4, 5, 6, 7].map((i) => (
                             <CardMovie
                                 key={i}
-                                slug="Arsya"
+                                slug={`Nihha-${i}`}
                                 title={`Nigga ${i}`}
                                 genres="Comedy"
                                 thumbnail="https://picsum.photos/200/300"

@@ -54,6 +54,10 @@ Route::prefix('type')->name('type.')->group(function () {
     Route::get('/subscriberPlan', function () {
         return Inertia::render('Type/SubscriberPlan');
     })->name('subscriberPlan');
+
+    Route::get('/movie/{slug}', function () {
+        return Inertia::render('Type/Movie/Show');
+    })->name('movie.show');
 });
 
 Route::get('/dashboard', function () {

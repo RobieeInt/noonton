@@ -1,3 +1,4 @@
+import { Link } from "@inertiajs/inertia-react";
 import PropTypes from "prop-types";
 
 CardMovie.propTypes = {
@@ -57,7 +58,11 @@ export default function CardMovie({
                         alt=""
                     />
                 </div>
-                <a href={slug} className="inset-0 absolute z-50"></a>
+                <Link
+                    href={route("type.movie.show", slug)}
+                    slug={slug}
+                    className="inset-0 absolute z-50"
+                ></Link>
             </div>
         </>
     );
