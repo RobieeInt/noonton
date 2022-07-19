@@ -67,7 +67,7 @@ export default function FeaturedMovie({
                 </div>
 
                 <Link
-                    href={route("user.dashbord.movie.show", slug)}
+                    href={route("user.dashboard.movie.show", slug)}
                     state={{ slug }}
                     className="inset-0 absolute z-50"
                 ></Link>

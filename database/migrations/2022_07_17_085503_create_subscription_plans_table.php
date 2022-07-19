@@ -19,6 +19,7 @@ return new class extends Migration
             $table->unsignedInteger('price');
             $table->unsignedInteger('active_period_in_month');
             $table->json('features');
+            $table->string('is_premium')->default(false);
 
             $table->timestamps();
             $table->softDeletes();

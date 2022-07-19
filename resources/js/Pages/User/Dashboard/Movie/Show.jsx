@@ -24,7 +24,7 @@ export default function Show({ movie }) {
                 </div>
 
                 <div className="absolute top-5 left-5 z-20">
-                    <Link href={route("user.dashbord.index")}>
+                    <Link href={route("user.dashboard.index")}>
                         <img
                             src="/icons/ic_arrow-left-green.svg"
                             className="transition-all btn-back w-[46px]"
