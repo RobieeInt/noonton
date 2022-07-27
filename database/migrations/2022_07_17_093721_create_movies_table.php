@@ -21,8 +21,8 @@ return new class extends Migration
             $table->string('slug');
             $table->string('category');
             $table->string('video_url');
-            $table->string('thumbnail');
-            $table->double('rating');
+            $table->string('thumbnail')->nullable();
+            $table->float('rating')->default(0);
             $table->boolean('is_featured')->default(false);
 
             $table->timestamps();

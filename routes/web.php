@@ -6,6 +6,8 @@ use Illuminate\Foundation\Application;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\MovieController;
 use App\Http\Controllers\User\SubscriptionPlanController;
+use App\Http\Controllers\Admin\MovieController as AdminMovieController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +42,7 @@ Route::get('user', function () {
 
 Route::redirect('/', '/login');
 
-
+///////////////////////////// MIDDLEWARE USER ////////////////////////////////////////////////
 Route::middleware(['auth', 'role:user'])->prefix('dashboard')->name('user.dashboard.')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('index');
 
@@ -50,6 +52,11 @@ Route::middleware(['auth', 'role:user'])->prefix('dashboard')->name('user.dashbo
     Route::post('subscription-plan/{subscriptionPlan}/user-subscribe', [SubscriptionPlanController::class, 'userSubscribe'])->name('subscriptionPlan.userSubscribe')->middleware('checkUserSubscription:false');
 
     });
+
+////////////////////////////// MIDDLEWARE ADMIN ////////////////////////////////////////////////////////////////
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.dashboard.')->group(function () {
+    Route::resource('movie', AdminMovieController::class);
+});
 
 // Route::get('/dashboard', function () {
 //     return Inertia::render('User/Dashboard/Index');
