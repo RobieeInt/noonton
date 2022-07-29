@@ -13,6 +13,7 @@ export default function Dashboard({ auth, featuredMovies, movies }) {
         pageDots: false,
         prevNextButtons: false,
         draggable: ">1",
+        autoPlay: 1000,
     };
 
     return (

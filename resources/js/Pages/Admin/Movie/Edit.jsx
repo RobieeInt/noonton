@@ -5,17 +5,11 @@ import Input from "@/Components/Input";
 import Checkbox from "@/Components/Checkbox";
 import { Link, Head, useForm } from "@inertiajs/inertia-react";
 import ValidationErrors from "@/Components/ValidationErrors";
+import { Inertia } from "@inertiajs/inertia";
 
-export default function Create({ auth }) {
-    const { data, setData, post, processing, errors } = useForm({
-        title: "",
-        description: "",
-        year: "",
-        category: "",
-        video_url: "",
-        thumbnail: "",
-        rating: "",
-        is_featured: false,
+export default function Edit({ auth, movie }) {
+    const { data, setData, processing, errors } = useForm({
+        ...movie, //ambil semua data movie
     });
 
     const onHandleChange = (event) => {
@@ -33,13 +27,21 @@ export default function Create({ auth }) {
     const submit = (e) => {
         e.preventDefault();
 
-        post(route("admin.dashboard.movie.store"));
+        //cek thumnail biar ga duplikat
+        if (data.thumbnail === movie.thumbnail) {
+            delete data.thumbnail;
+        }
+
+        Inertia.post(route("admin.dashboard.movie.update", movie.id), {
+            ...data,
+            _method: "PUT",
+        });
     };
     return (
         <>
-            <Head title="Admin Create Movie" />
+            <Head title="Admin Update Movie" />
             <Authenticated auth={auth}>
-                <h1 className="text-xl mt-4">Masukin Film Baru</h1>
+                <h1 className="text-xl mt-4">Update Film : {movie.title} </h1>
                 <hr className="mb-4" />
 
                 {/* Error validasi */}
@@ -48,8 +50,9 @@ export default function Create({ auth }) {
                 <form onSubmit={submit}>
                     <Label forInput="title" value="title" className="mt-4" />
                     <Input
+                        defaultValue={movie.title}
                         className="mb-5"
-                        placeholder="Masukin Judul Filmnya"
+                        placeholder="Update Judul Filmnya"
                         type="text"
                         name="title"
                         variant="primary-outline"
@@ -62,6 +65,7 @@ export default function Create({ auth }) {
                         className="mt-4"
                     />
                     <Input
+                        defaultValue={movie.description}
                         className="mb-5"
                         placeholder="Masukin Deskripsi Filmnya"
                         type="text"
@@ -72,6 +76,7 @@ export default function Create({ auth }) {
                     />
                     <Label forInput="year" value="year" className="mt-4" />
                     <Input
+                        defaultValue={movie.year}
                         className="mb-5"
                         placeholder="Masukin Tahun Filmnya"
                         type="text"
@@ -86,6 +91,7 @@ export default function Create({ auth }) {
                         className="mt-4"
                     />
                     <Input
+                        defaultValue={movie.category}
                         className="mb-5"
                         placeholder="Masukin Judul Filmnya"
                         type="text"
@@ -100,6 +106,7 @@ export default function Create({ auth }) {
                         className="mt-4"
                     />
                     <Input
+                        defaultValue={movie.video_url}
                         className="mb-5"
                         placeholder="Masukin Url Filmnya"
                         type="text"
@@ -113,6 +120,11 @@ export default function Create({ auth }) {
                         value="thumbnail"
                         className="mt-4"
                     />
+                    <img
+                        src={`/storage/${movie.thumbnail}`}
+                        className="w-40 rounded-md"
+                        alt=""
+                    />
                     <Input
                         placeholder="Masukin thumbnaiL Filmnya"
                         type="file"
@@ -123,6 +135,7 @@ export default function Create({ auth }) {
                     />
                     <Label forInput="rating" value="rating" className="mt-4" />
                     <Input
+                        defaultValue={movie.rating}
                         placeholder="Masukin rating Filmnya"
                         type="number"
                         name="rating"
@@ -141,6 +154,7 @@ export default function Create({ auth }) {
                             handleChange={(e) =>
                                 setData("is_featured", e.target.checked)
                             }
+                            checked={movie.is_featured}
                         />
                     </div>
                     <Button

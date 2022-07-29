@@ -22,7 +22,7 @@ export default function CardMovie({
         <>
             <div className="absolute group overflow-hidden mr-[30px] bg-blend-darken">
                 <img
-                    src={thumbnail}
+                    src={`/storage/${thumbnail}`}
                     className="object-cover rounded-[30px] h-[340px] w-[250px] brightness-50"
                     alt=""
                 />

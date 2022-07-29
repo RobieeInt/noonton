@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\Admin\Movie\Store;
+use App\Http\Requests\Admin\Movie\Update;
 
 class MovieController extends Controller
 {
@@ -18,7 +19,10 @@ class MovieController extends Controller
      */
     public function index()
     {
-        return inertia('Admin/Movie/Index');
+        $movies = Movie::all();
+        return inertia('Admin/Movie/Index', [
+            'movies' => $movies,
+        ]);
     }
 
     /**
@@ -42,12 +46,12 @@ class MovieController extends Controller
         $data = $request->validated();
         $data['thumbnail'] = Storage::disk('public')->put('movies', $request->file('thumbnail'));
         $data['slug'] = Str::slug($data['title']);
-        $movie = Movie::create($data);
+        Movie::create($data);
         // return $request->all();
 
         return redirect(route('admin.dashboard.movie.index'))->with([
             'type' => 'success',
-            'message' => 'Movie created successfully'
+            'message' => 'Movie Berhasil Dibuat !'
         ]);
     }
 
@@ -70,7 +74,9 @@ class MovieController extends Controller
      */
     public function edit(Movie $movie)
     {
-        //
+        return inertia('Admin/Movie/Edit', [
+            'movie' => $movie,
+        ]);
     }
 
     /**
@@ -80,9 +86,23 @@ class MovieController extends Controller
      * @param  \App\Models\Movie  $movie
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Movie $movie)
+    public function update(Update $request, Movie $movie)
     {
-        //
+        $data = $request->validated();
+        if ($request->hasFile('thumbnail')) {
+            $data['thumbnail'] = Storage::disk('public')->put('movies', $request->file('thumbnail'));
+            Storage::disk('public')->delete($movie->thumbnail);
+        } else {
+            $data['thumbnail'] = $movie->thumbnail;
+        }
+        $data['slug'] = Str::slug($data['title']);
+        $movie->update($data);
+
+        return redirect(route('admin.dashboard.movie.index'))->with([
+            'type' => 'success',
+            'message' => 'Movie Berhasil Diubah !'
+        ]);
+        // return $request->all();
     }
 
     /**
@@ -93,6 +113,11 @@ class MovieController extends Controller
      */
     public function destroy(Movie $movie)
     {
-        //
+        $movie->delete();
+        return redirect(route('admin.dashboard.movie.index'))->with([
+            'type' => 'success',
+            'message' => 'Movie Berhasil Dihapus !'
+        ]);
+        // return $movie;
     }
 }
