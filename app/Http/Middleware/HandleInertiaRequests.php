@@ -57,6 +57,11 @@ class HandleInertiaRequests extends Middleware
         //dari active days dikurangi dengan hari yang sudah expired
         $remainingActiveDays = Carbon::parse($activePlan->expired_date)->diffInDays(Carbon::now());
 
+
+
+
+
+
         return [
             'name' => $activePlan->subscriptionPlan->name,
             'is_premium' => $activePlan->subscriptionPlan->is_premium,
@@ -67,12 +72,21 @@ class HandleInertiaRequests extends Middleware
 
     }
 
+    private function whatRole() {
+
+        //check role user
+        $role = Auth::user() ? Auth::user()->roles->first() : null;
+        return $role ? $role->name : null;
+
+    }
+
     public function share(Request $request)
     {
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => $request->user(),
                 'activePlan' => $this->activePlan(),
+                'whatRole' => $this->whatRole(),
             ],
             'flashMessage' => [
                 'type' => Session::get('type'),

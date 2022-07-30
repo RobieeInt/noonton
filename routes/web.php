@@ -55,6 +55,8 @@ Route::middleware(['auth', 'role:user'])->prefix('dashboard')->name('user.dashbo
 
 ////////////////////////////// MIDDLEWARE ADMIN ////////////////////////////////////////////////////////////////
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.dashboard.')->group(function () {
+    // Route::put('movie/{movie]/restore', [AdminMovieController::class, 'restore'])->name('movie.restore');
+    Route::put('movie/{movie}/restore', [AdminMovieController::class, 'restore'])->name('movie.restore');
     Route::resource('movie', AdminMovieController::class);
 });
 

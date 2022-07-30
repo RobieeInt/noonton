@@ -4,7 +4,7 @@ import { Link, Head, useForm } from "@inertiajs/inertia-react";
 import FlashMessage from "@/Components/FlashMessage";
 
 export default function Index({ auth, flashMessage, movies }) {
-    const { delete: destroy } = useForm();
+    const { delete: destroy, put } = useForm();
     return (
         <>
             <Head title="Admin Dashboard" />
@@ -85,24 +85,25 @@ export default function Index({ auth, flashMessage, movies }) {
                                     </Link>
                                     <div
                                         onClick={() => {
-                                            if (
-                                                window.confirm(
-                                                    "Hapus Data Movie?"
-                                                )
-                                            ) {
-                                                destroy(
-                                                    route(
-                                                        "admin.dashboard.movie.destroy",
-                                                        {
-                                                            id: movie.id,
-                                                        }
-                                                    )
-                                                );
-                                            }
+                                            movie.deleted_at
+                                                ? put(
+                                                      route(
+                                                          "admin.dashboard.movie.restore",
+                                                          { id: movie.id }
+                                                      )
+                                                  )
+                                                : destroy(
+                                                      route(
+                                                          "admin.dashboard.movie.destroy",
+                                                          { id: movie.id }
+                                                      )
+                                                  );
                                         }}
                                     >
                                         <Button type="button" variant="danger">
-                                            Delete
+                                            {movie.deleted_at
+                                                ? "Restore"
+                                                : "Delete"}
                                         </Button>
                                     </div>
                                 </td>
