@@ -3,26 +3,49 @@ import Button from "@/Components/Button";
 import { Link, Head, useForm } from "@inertiajs/inertia-react";
 import DataTable from "react-data-table-component";
 import { useEffect, useState } from "react";
+import FlashMessage from "@/Components/FlashMessage";
 
-export default function Index({ auth, movies }) {
+export default function Index({ auth, movies, flashMessage }) {
+    const { delete: destroy, put } = useForm();
     const [Search, setSearch] = useState("");
     const [filteredTitle, setFilteredTitle] = useState([]);
 
-    //expand image & description
+    //expand image, description & delete button
     const ExpandedComponent = ({ data }) => (
         <div className="text-center">
-            <h3 className="text-green-600">
-                <strong>Thumbnail</strong>
-            </h3>
-            <img
-                alt={data.title}
-                src={`/storage/${data.thumbnail}`}
-                className="w-32 rounded-md mx-auto"
-            />
-            <p className="text-green-600">
-                <strong>Description</strong>
-            </p>
-            <p className="">{data.description}</p>
+            <div>
+                <h3 className="text-green-600">
+                    <strong>Thumbnail</strong>
+                </h3>
+                <img
+                    alt={data.title}
+                    src={`/storage/${data.thumbnail}`}
+                    className="w-32 rounded-md mx-auto"
+                />
+                <p className="text-green-600">
+                    <strong>Description</strong>
+                </p>
+                <p className="">{data.description}</p>
+            </div>
+            <div
+                onClick={() => {
+                    data.deleted_at
+                        ? put(
+                              route("admin.dashboard.movie.restore", {
+                                  id: data.id,
+                              })
+                          )
+                        : destroy(
+                              route("admin.dashboard.movie.destroy", {
+                                  id: data.id,
+                              })
+                          );
+                }}
+            >
+                <Button type="button" className="w-24" variant="danger">
+                    {data.deleted_at ? "Restore" : "Delete"}
+                </Button>
+            </div>
         </div>
     );
     const columns = [
@@ -34,6 +57,7 @@ export default function Index({ auth, movies }) {
                 >
                     Edit
                 </Link>
+
                 //delete button
             ),
             //double cell
@@ -81,6 +105,7 @@ export default function Index({ auth, movies }) {
             description: movie.description,
             video_url: movie.video_url,
             thumbnail: movie.thumbnail,
+            deleted_at: movie.deleted_at,
 
             id: movie.id,
         };
@@ -107,6 +132,9 @@ export default function Index({ auth, movies }) {
                         Create
                     </Button>
                 </Link>
+                {flashMessage?.message && (
+                    <FlashMessage message={flashMessage.message} />
+                )}
                 <DataTable
                     columns={columns}
                     data={filteredTitle}

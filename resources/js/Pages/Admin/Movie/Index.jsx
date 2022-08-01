@@ -1,15 +1,155 @@
 import Authenticated from "@/Layouts/Authenticated/Index";
 import Button from "@/Components/Button";
 import { Link, Head, useForm } from "@inertiajs/inertia-react";
+import DataTable from "react-data-table-component";
+import { useEffect, useState } from "react";
 import FlashMessage from "@/Components/FlashMessage";
 
-export default function Index({ auth, flashMessage, movies }) {
+export default function Index({ auth, movies, flashMessage }) {
     const { delete: destroy, put } = useForm();
+    const [Search, setSearch] = useState("");
+    const [filteredTitle, setFilteredTitle] = useState([]);
+
+    //expand image, description & delete button
+    const ExpandedComponent = ({ data }) => (
+        <div className="text-center">
+            <div>
+                <h3 className="text-green-600">
+                    <strong>Thumbnail</strong>
+                </h3>
+                <img
+                    alt={data.title}
+                    src={`/storage/${data.thumbnail}`}
+                    className="w-32 rounded-md mx-auto"
+                />
+                <p className="text-green-600">
+                    <strong>Description</strong>
+                </p>
+                <p className="">{data.description}</p>
+            </div>
+            <div
+                onClick={() => {
+                    data.deleted_at
+                        ? put(
+                              route("admin.dashboard.movie.restore", {
+                                  id: data.id,
+                              })
+                          )
+                        : destroy(
+                              route("admin.dashboard.movie.destroy", {
+                                  id: data.id,
+                              })
+                          );
+                }}
+            >
+                <Button type="button" className="w-24" variant="danger">
+                    {data.deleted_at ? "Restore" : "Delete"}
+                </Button>
+            </div>
+        </div>
+    );
+    const columns = [
+        {
+            name: "Action",
+            cell: (row) => (
+                <Link
+                    href={route("admin.dashboard.movie.edit", { id: row.id })}
+                >
+                    Edit
+                </Link>
+
+                //delete button
+            ),
+            //double cell
+            // cell: (row) => (
+            //     <Link
+            //         href={route("admin.dashboard.movie.edit", { id: row.id })}
+            //     >
+            //         Edit
+            //     </Link>
+            //     <Link
+            //         href={route("admin.dashboard.movie.delete", { id: row.id })}
+            //     >
+            //         Delete
+            //     </Link>
+            // ),
+            width: "100px",
+        },
+        {
+            name: "Title",
+            selector: (row) => row.title,
+            // width: "350px",
+        },
+        {
+            name: "Year",
+            selector: (row) => row.year,
+            width: "100px",
+        },
+        {
+            name: "Category",
+            selector: (row) => row.category,
+            // width: "100px",
+        },
+        {
+            name: "Daftar Atas",
+            selector: (row) => {
+                if (row.is_featured === 1) {
+                    return "Ya";
+                } else {
+                    return "Tidak";
+                }
+            },
+            width: "130px",
+        },
+        {
+            name: "Video URL",
+            selector: (row) => row.video_url,
+            // width: "100px",
+        },
+    ];
+
+    const data = movies.map((movie) => {
+        return {
+            title: movie.title,
+            year: movie.year,
+            category: movie.category,
+            description: movie.description,
+            video_url: movie.video_url,
+            thumbnail: movie.thumbnail,
+            deleted_at: movie.deleted_at,
+            is_featured: movie.is_featured,
+
+            id: movie.id,
+        };
+    });
+
+    //filter title, description, category
+    // const filteredData = data.filter((movie) => {
+    //     return (
+    //         movie.title.toLowerCase().includes(Search.toLowerCase()) ||
+    //         movie.description.toLowerCase().includes(Search.toLowerCase()) ||
+    //         movie.category.toLowerCase().includes(Search.toLowerCase())
+    //     );
+    // });
+
+    //useeffect to filter by title, description, category, year
+    useEffect(() => {
+        const result = data.filter((item) => {
+            return (
+                item.title.toLowerCase().includes(Search.toLowerCase()) ||
+                item.description.toLowerCase().includes(Search.toLowerCase()) ||
+                item.category.toLowerCase().includes(Search.toLowerCase()) ||
+                item.year.toString().toLowerCase().match(Search.toLowerCase()) //tahun di convert dlu jadi string
+            );
+        });
+        setFilteredTitle(result);
+    }, [Search]);
+
     return (
         <>
-            <Head title="Admin Dashboard" />
+            <Head title="Admin Dashboard - Subscription Plan" />
             <Authenticated auth={auth}>
-                <Link href={route("admin.dashboard.movie.create")}>
+                <Link href={route("admin.dashboard.subscriptionPlan.create")}>
                     <Button
                         type="button"
                         className="w-44 mb-4 mt-2 hover:bg-green-500 hover:text-white"
@@ -21,96 +161,30 @@ export default function Index({ auth, flashMessage, movies }) {
                 {flashMessage?.message && (
                     <FlashMessage message={flashMessage.message} />
                 )}
-                <table className="w-full border-collapse border-solid cell--width3 border-2">
-                    <thead className="border-2">
-                        <tr>
-                            <th className="border">Title</th>
-                            <th className="border">Description</th>
-                            <th className="border">Year</th>
-                            <th className="border">Category</th>
-                            <th className="border">Video URL</th>
-                            <th className="border">Thumbnail</th>
-                            <th className="border">Rating</th>
-                            <th className="border">Featured</th>
-                            <th colSpan={2}>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody className="border-bottom-3">
-                        {movies.map((movie) => (
-                            <tr key={movie.id}>
-                                <td className="text-left p-5 border">
-                                    {movie.title}
-                                </td>
-                                <td className="text-left p-5 border">
-                                    {movie.description}
-                                </td>
-                                <td className="text-left p-5 border">
-                                    {movie.year}
-                                </td>
-                                <td className="text-left p-5 border">
-                                    {movie.category}
-                                </td>
-                                <td className="text-left p-5 border">
-                                    {movie.video_url}
-                                </td>
-                                <td className="text-left p-5 border">
-                                    <img
-                                        alt={movie.title}
-                                        src={`/storage/${movie.thumbnail}`}
-                                        className="w-32 rounded-md"
-                                    />
-                                </td>
-                                <td className="text-left p-5 border">
-                                    {movie.rating}
-                                </td>
-                                <td className="text-left p-5 border">
-                                    {movie.is_featured === 1 ? "Ya" : "Nggak"}
-                                </td>
-                                <td className="text-left p-5 border">
-                                    <Link
-                                        href={route(
-                                            "admin.dashboard.movie.edit",
-                                            {
-                                                id: movie.id,
-                                            }
-                                        )}
-                                    >
-                                        <Button
-                                            type="button"
-                                            className="w-auto mb-1 mt-1 hover:bg-green-500 hover:text-black"
-                                        >
-                                            {" "}
-                                            Edit
-                                        </Button>
-                                    </Link>
-                                    <div
-                                        onClick={() => {
-                                            movie.deleted_at
-                                                ? put(
-                                                      route(
-                                                          "admin.dashboard.movie.restore",
-                                                          { id: movie.id }
-                                                      )
-                                                  )
-                                                : destroy(
-                                                      route(
-                                                          "admin.dashboard.movie.destroy",
-                                                          { id: movie.id }
-                                                      )
-                                                  );
-                                        }}
-                                    >
-                                        <Button type="button" variant="danger">
-                                            {movie.deleted_at
-                                                ? "Restore"
-                                                : "Delete"}
-                                        </Button>
-                                    </div>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
+                <DataTable
+                    columns={columns}
+                    data={filteredTitle}
+                    expandableRows
+                    expandOnRowClicked={true}
+                    expandableRowsComponent={ExpandedComponent}
+                    pagination={true}
+                    selectableRowsHighlight={true}
+                    highlightOnHover
+                    sortIcon={true}
+                    fixedHeader
+                    responsive={true}
+                    subHeaderWrap
+                    subHeader
+                    subHeaderComponent={
+                        <input
+                            type="text"
+                            placeholder="Search ..."
+                            className="form-control border border-green-200 bg-gray-200 rounded-lg px-4 py-2"
+                            value={Search}
+                            onChange={(e) => setSearch(e.target.value)}
+                        />
+                    }
+                />
             </Authenticated>
         </>
     );

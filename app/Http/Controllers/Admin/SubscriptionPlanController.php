@@ -19,7 +19,7 @@ class SubscriptionPlanController extends Controller
     {
 
         // return inertia('Admin/SubscriptionPlan/Index');
-        $movies = Movie::all();
+        $movies = Movie::withTrashed()->orderBy('deleted_at')->get();
         return inertia('Admin/SubscriptionPlan/Index', [
             'movies' => $movies,
         ]);
