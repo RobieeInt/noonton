@@ -26,7 +26,7 @@ export default function Dashboard() {
             <Authenticated>
                 <div>
                     <div className="font-semibold text-[22px] text-black mb-4 mt-5">
-                        Featured Movies
+                        Featured Video
                     </div>
                     <Flickity className="gap-[30px]" options={flickityOptions}>
                         {[1, 2, 3, 4].map((i) => (

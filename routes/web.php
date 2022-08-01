@@ -7,6 +7,8 @@ use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\MovieController;
 use App\Http\Controllers\User\SubscriptionPlanController;
 use App\Http\Controllers\Admin\MovieController as AdminMovieController;
+use App\Http\Controllers\Admin\FeaturedController;
+use App\Http\Controllers\Admin\SubscriptionPlanController as AdminSubscriptionPlanController;
 
 
 /*
@@ -58,6 +60,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.dashboar
     // Route::put('movie/{movie]/restore', [AdminMovieController::class, 'restore'])->name('movie.restore');
     Route::put('movie/{movie}/restore', [AdminMovieController::class, 'restore'])->name('movie.restore');
     Route::resource('movie', AdminMovieController::class);
+    Route::resource('subscriptionPlan', AdminSubscriptionPlanController::class);
 });
 
 // Route::get('/dashboard', function () {

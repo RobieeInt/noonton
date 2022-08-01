@@ -27,7 +27,7 @@ export default function Dashboard({ auth, featuredMovies, movies }) {
             <Authenticated auth={auth}>
                 <div>
                     <div className="font-semibold text-[22px] text-black mb-4 mt-5">
-                        Featured Movies
+                        Featured Video
                     </div>
                     <Flickity className="gap-[30px]" options={flickityOptions}>
                         {featuredMovies.map((featuredMovie) => (
