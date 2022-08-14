@@ -59,8 +59,9 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.dashboar
     // Route::put('movie/{movie]/restore', [AdminMovieController::class, 'restore'])->name('movie.restore');
     Route::put('movie/{movie}/restore', [AdminMovieController::class, 'restore'])->name('movie.restore');
     Route::resource('movie', AdminMovieController::class);
-    Route::resource('subscriptionPlan', AdminSubscriptionPlanController::class);
     Route::put('movie/{movie}/restore', [AdminMovieController::class, 'restore'])->name('movie.restore');
+    Route::resource('subscriptionPlan', AdminSubscriptionPlanController::class);
+    Route::put('subscriptionPlan/{subscriptionPlan}/restore', [AdminSubscriptionPlanController::class, 'restore'])->name('subscriptionPlan.restore');
 });
 
 // Route::get('/dashboard', function () {

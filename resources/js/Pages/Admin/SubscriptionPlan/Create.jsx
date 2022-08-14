@@ -8,32 +8,26 @@ import ValidationErrors from "@/Components/ValidationErrors";
 
 export default function Create({ auth }) {
     const { data, setData, post, processing, errors } = useForm({
-        title: "",
-        description: "",
-        year: "",
-        category: "",
-        video_url: "",
-        thumbnail: "",
-        rating: "",
-        is_featured: false,
+        name: "",
+        price: "",
+        active_period_in_month: "",
+        is_premium: false,
+        features: "",
     });
 
     const onHandleChange = (event) => {
         setData(
             event.target.name,
-            // event.target.type === "checkbox"
-            //     ? event.target.checked
-            //     : event.target.value,
-            event.target.type === "file"
-                ? event.target.files[0]
+            //array of features
+            event.target.name === "features"
+                ? event.target.value.split(",")
                 : event.target.value
         );
     };
 
     const submit = (e) => {
         e.preventDefault();
-
-        post(route("admin.dashboard.movie.store"));
+        post(route("admin.dashboard.subscriptionPlan.store"));
     };
     return (
         <>
@@ -46,100 +40,64 @@ export default function Create({ auth }) {
                 <ValidationErrors errors={errors} />
 
                 <form onSubmit={submit}>
-                    <Label forInput="title" value="title" className="mt-4" />
+                    <Label forInput="name" value="name" className="mt-4" />
                     <Input
                         className="mb-5"
-                        placeholder="Masukin Judul Filmnya"
+                        placeholder="Masukin Nama Paket"
                         type="text"
-                        name="title"
+                        name="name"
                         variant="primary-outline"
                         handleChange={onHandleChange}
-                        isError={errors.title}
+                        isError={errors.name}
+                    />
+                    <Label forInput="price" value="price" className="mt-4" />
+                    <Input
+                        className="mb-5"
+                        placeholder="Masukin Harga Paket"
+                        type="text"
+                        name="price"
+                        variant="primary-outline"
+                        handleChange={onHandleChange}
+                        isError={errors.price}
                     />
                     <Label
-                        forInput="description"
-                        value="description"
+                        forInput="features"
+                        value="features"
+                        className="mt-4"
+                    />
+                    {/* input array */}
+                    <Input
+                        className="mb-5"
+                        placeholder="Masukin Fitur Paket, dipisahkan dengan koma"
+                        type="text"
+                        name="features"
+                        variant="primary-outline"
+                        handleChange={onHandleChange}
+                        isError={errors.features}
+                    />
+                    <Label
+                        forInput="active_period_in_month"
+                        value="active_period_in_month"
                         className="mt-4"
                     />
                     <Input
-                        className="mb-5"
-                        placeholder="Masukin Deskripsi Filmnya"
-                        type="text"
-                        name="description"
-                        variant="primary-outline"
-                        handleChange={onHandleChange}
-                        isError={errors.description}
-                    />
-                    <Label forInput="year" value="year" className="mt-4" />
-                    <Input
-                        className="mb-5"
-                        placeholder="Masukin Tahun Filmnya"
-                        type="text"
-                        name="year"
-                        variant="primary-outline"
-                        handleChange={onHandleChange}
-                        isError={errors.year}
-                    />
-                    <Label
-                        forInput="category"
-                        value="category"
-                        className="mt-4"
-                    />
-                    <Input
-                        className="mb-5"
-                        placeholder="Masukin Judul Filmnya"
-                        type="text"
-                        name="category"
-                        variant="primary-outline"
-                        handleChange={onHandleChange}
-                        isError={errors.category}
-                    />
-                    <Label
-                        forInput="video_url"
-                        value="video_url"
-                        className="mt-4"
-                    />
-                    <Input
-                        className="mb-5"
-                        placeholder="Masukin Url Filmnya"
-                        type="text"
-                        name="video_url"
-                        variant="primary-outline"
-                        handleChange={onHandleChange}
-                        isError={errors.video_url}
-                    />
-                    <Label
-                        forInput="thumbnail"
-                        value="thumbnail"
-                        className="mt-4"
-                    />
-                    <Input
-                        placeholder="Masukin thumbnaiL Filmnya"
-                        type="file"
-                        name="thumbnail"
-                        variant="primary-outline"
-                        handleChange={onHandleChange}
-                        isError={errors.thumbnail}
-                    />
-                    <Label forInput="rating" value="rating" className="mt-4" />
-                    <Input
-                        placeholder="Masukin rating Filmnya"
+                        placeholder="Masukin active_period_in_month"
                         type="number"
-                        name="rating"
+                        name="active_period_in_month"
                         variant="primary-outline"
                         handleChange={onHandleChange}
-                        isError={errors.rating}
+                        isError={errors.active_period_in_month}
                     />
                     <div className="flex flex-row mt-4 items-center">
                         <Label
-                            forInput="is_featured"
-                            value="Daftar Atas ?"
+                            forInput="is_premium"
+                            value="Premium ?"
                             className="mt-4 mr-3"
                         />
                         <Checkbox
-                            name="is_featured"
+                            name="is_premium"
                             handleChange={(e) =>
-                                setData("is_featured", e.target.checked)
+                                setData("is_premium", e.target.checked)
                             }
                         />
                     </div>

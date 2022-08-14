@@ -46,7 +46,8 @@ class MovieController extends Controller
         $data = $request->validated();
         $data['thumbnail'] = Storage::disk('public')->put('movies', $request->file('thumbnail'));
         $data['slug'] = Str::slug($data['title']);
-        Movie::create($data);
+        dd($data);
+        // Movie::create($data);
         // return $request->all();
 
         return redirect(route('admin.dashboard.movie.index'))->with([
@@ -114,21 +115,20 @@ class MovieController extends Controller
     public function destroy(Movie $movie)
     {
         $movie->delete();
-        return redirect(route('admin.dashboard.movie.index'))->with([
+        return redirect()->back()->with([
             'type' => 'success',
             'message' => 'Movie Berhasil Dihapus !'
         ]);
         // return $movie;
     }
 
-    public function restore($movie) {
-        Movie::withTrashed()->find($movie)->restore();
-        return redirect(route('admin.dashboard.movie.index'))->with([
+    public function restore($id) {
+        $movie = Movie::withTrashed()->find($id);
+        $movie->restore();
+        return redirect()->back()->with([
             'type' => 'success',
             'message' => 'Movie Berhasil Dikembalikan !'
         ]);
-
-        // return $movie;
 
     }
 }

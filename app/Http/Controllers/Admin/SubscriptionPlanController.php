@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\SubscriptionPlan;
 use App\Models\Movie;
 use Illuminate\Http\Request;
+use App\Http\Requests\Admin\SubscriptionPlan\Store;
 
 
 class SubscriptionPlanController extends Controller
@@ -19,9 +20,9 @@ class SubscriptionPlanController extends Controller
     {
 
         // return inertia('Admin/SubscriptionPlan/Index');
-        $movies = Movie::withTrashed()->orderBy('deleted_at')->get();
+        $subscriptionPlan = SubscriptionPlan::withTrashed()->orderBy('deleted_at')->get();
         return inertia('Admin/SubscriptionPlan/Index', [
-            'movies' => $movies,
+            'subscriptionPlan' => $subscriptionPlan,
         ]);
     }
 
@@ -41,9 +42,18 @@ class SubscriptionPlanController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Store $request)
     {
-        //
+        $data = $request->validated();
+        //save array to json
+        // dd($data);
+        $data['features'] = json_encode($data['features']);
+        SubscriptionPlan::create($data);
+        // return $request->all();
+        return redirect(route('admin.dashboard.subscriptionPlan.index'))->with([
+            'type' => 'success',
+            'message' => 'Subscription Plan Berhasil Dibuat !'
+        ]);
     }
 
     /**
@@ -88,6 +98,20 @@ class SubscriptionPlanController extends Controller
      */
     public function destroy(SubscriptionPlan $subscriptionPlan)
     {
-        //
+        $subscriptionPlan->delete();
+        return redirect()->back()->with([
+            'type' => 'success',
+            'message' => 'Subscription Plan Berhasil Dihapus !'
+        ]);
+    }
+
+    public function restore($id)
+    {
+        $subscriptionPlan = SubscriptionPlan::withTrashed()->find($id);
+        $subscriptionPlan->restore();
+        return redirect()->back()->with([
+            'type' => 'success',
+            'message' => 'Subscription Plan Berhasil Dikembalikan !'
+        ]);
     }
 }

@@ -5,119 +5,143 @@ import DataTable from "react-data-table-component";
 import { useEffect, useState } from "react";
 import FlashMessage from "@/Components/FlashMessage";
 
-export default function Index({ auth, movies, flashMessage }) {
+export default function Index({ auth, subscriptionPlan, flashMessage }) {
     const { delete: destroy, put } = useForm();
     const [Search, setSearch] = useState("");
     const [filteredTitle, setFilteredTitle] = useState([]);
 
-    //expand image, description & delete button
     const ExpandedComponent = ({ data }) => (
         <div className="text-center">
             <div>
                 <h3 className="text-green-600">
-                    <strong>Thumbnail</strong>
+                    <strong>Fitur</strong>
                 </h3>
-                <img
-                    alt={data.title}
-                    src={`/storage/${data.thumbnail}`}
-                    className="w-32 rounded-md mx-auto"
-                />
-                <p className="text-green-600">
-                    <strong>Description</strong>
+                <p>
+                    {/* show json data with comma */}
+                    {JSON.parse(data.features).join(", ")}
+                    {/* {JSON.stringify(data.features)} */}
                 </p>
-                <p className="">{data.description}</p>
+                <p className="text-green-600">
+                    <strong>Deskripsi</strong>
+                </p>
+                <p className="">
+                    {/* show date with format dd-mm-yyyy */}
+                    {new Date(data.created_at).toLocaleString("id-ID", {
+                        timeZone: "Asia/Jakarta",
+                        dateStyle: "full",
+                        timeStyle: "short",
+                    })}
+                </p>
             </div>
             <div
                 onClick={() => {
                     data.deleted_at
                         ? put(
-                              route("admin.dashboard.movie.restore", {
-                                  id: data.id,
-                              })
+                              route(
+                                  "admin.dashboard.subscriptionPlan.restore",
+                                  {
+                                      id: data.id,
+                                  }
+                              )
                           )
                         : destroy(
-                              route("admin.dashboard.movie.destroy", {
-                                  id: data.id,
-                              })
+                              route(
+                                  "admin.dashboard.subscriptionPlan.destroy",
+                                  {
+                                      id: data.id,
+                                  }
+                              )
                           );
                 }}
             >
-                <Button type="button" className="w-24" variant="danger">
-                    {data.deleted_at ? "Restore" : "Delete"}
-                </Button>
+                {data.deleted_at ? (
+                    <Button color="green" size="sm">
+                        Restore
+                    </Button>
+                ) : (
+                    <Button variant="danger" size="sm">
+                        Delete
+                    </Button>
+                )}
             </div>
         </div>
     );
+
+    //map data to display
+    const data = subscriptionPlan.map((plan) => {
+        return {
+            id: plan.id,
+            title: plan.name,
+            price: plan.price,
+            duration: plan.active_period_in_month,
+            features: plan.features,
+            created_at: plan.created_at,
+            deleted_at: plan.deleted_at,
+        };
+    });
+
+    //columns to display
     const columns = [
+        {
+            name: "Title",
+            selector: (row) => row.title,
+            sortable: true,
+        },
+        {
+            name: "Price",
+            selector: (row) => row.price,
+            sortable: true,
+        },
+        {
+            name: "Durasi / Bulan",
+            //date format
+            selector: (row) => row.duration,
+            sortable: true,
+        },
         {
             name: "Action",
             cell: (row) => (
                 <Link
-                    href={route("admin.dashboard.movie.edit", { id: row.id })}
+                    href={route("admin.dashboard.subscriptionPlan.edit", {
+                        id: row.id,
+                    })}
                 >
                     Edit
                 </Link>
-
-                //delete button
             ),
-            //double cell
-            // cell: (row) => (
-            //     <Link
-            //         href={route("admin.dashboard.movie.edit", { id: row.id })}
-            //     >
-            //         Edit
-            //     </Link>
-            //     <Link
-            //         href={route("admin.dashboard.movie.delete", { id: row.id })}
-            //     >
-            //         Delete
-            //     </Link>
-            // ),
-            width: "100px",
-        },
-        {
-            name: "Title",
-            selector: (row) => row.title,
-            // width: "350px",
-        },
-        {
-            name: "Year",
-            selector: (row) => row.year,
-            // width: "100px",
-        },
-        {
-            name: "Category",
-            selector: (row) => row.category,
-            // width: "100px",
-        },
-        {
-            name: "Video URL",
-            selector: (row) => row.video_url,
-            // width: "100px",
         },
     ];
 
-    const data = movies.map((movie) => {
-        return {
-            title: movie.title,
-            year: movie.year,
-            category: movie.category,
-            description: movie.description,
-            video_url: movie.video_url,
-            thumbnail: movie.thumbnail,
-            deleted_at: movie.deleted_at,
-
-            id: movie.id,
-        };
-    });
-
-    //useeffect to filter by title
-    useEffect(() => {
-        const result = data.filter((item) => {
-            return item.title.toLowerCase().match(Search.toLowerCase());
-        });
-        setFilteredTitle(result);
-    }, [Search]);
+    //search filter cara beda dengan movie
+    const filteredData = data
+        .filter((item) => {
+            return (
+                item.title.toLowerCase().includes(Search.toLowerCase()) ||
+                item.price
+                    .toString()
+                    .toLowerCase()
+                    .includes(Search.toLowerCase()) ||
+                item.duration
+                    .toString()
+                    .toLowerCase()
+                    .includes(Search.toLowerCase()) //yang bukan string di convert dlu jadi string
+            );
+        })
+        .map((item) => {
+            return {
+                id: item.id,
+                title: item.title,
+                price: item.price,
+                duration: item.duration,
+                features: item.features,
+                created_at: item.created_at,
+                deleted_at: item.deleted_at,
+            };
+        })
+        .sort((a, b) => {
+            return a.id - b.id;
+        })
+        .reverse();
 
     return (
         <>
@@ -135,24 +159,25 @@ export default function Index({ auth, movies, flashMessage }) {
                 {flashMessage?.message && (
                     <FlashMessage message={flashMessage.message} />
                 )}
+
                 <DataTable
                     columns={columns}
-                    data={filteredTitle}
+                    data={filteredData}
                     expandableRows
+                    expandOnRowClicked={true}
                     expandableRowsComponent={ExpandedComponent}
                     pagination={true}
                     selectableRowsHighlight={true}
                     highlightOnHover
                     sortIcon={true}
                     fixedHeader
-                    responsive={true}
                     subHeaderWrap
                     subHeader
                     subHeaderComponent={
                         <input
                             type="text"
-                            placeholder="Search"
-                            className="form-control outline-green-200 bg-green-200"
+                            placeholder="Search ..."
+                            className="form-control border border-green-200 bg-gray-200 rounded-lg px-4 py-2"
                             value={Search}
                             onChange={(e) => setSearch(e.target.value)}
                         />

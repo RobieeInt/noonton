@@ -10,6 +10,14 @@ export default function Index({ auth, movies, flashMessage }) {
     const [Search, setSearch] = useState("");
     const [filteredTitle, setFilteredTitle] = useState([]);
 
+    //datatable export excel
+    const exportToExcel = () => {
+        const ws = XLSX.utils.json_to_sheet(movies);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
+        XLSX.writeFile(wb, "movies.xlsx");
+    };
+
     //expand image, description & delete button
     const ExpandedComponent = ({ data }) => (
         <div className="text-center">
@@ -42,9 +50,18 @@ export default function Index({ auth, movies, flashMessage }) {
                           );
                 }}
             >
-                <Button type="button" className="w-24" variant="danger">
+                {data.deleted_at ? (
+                    <Button color="green" size="sm">
+                        Restore
+                    </Button>
+                ) : (
+                    <Button variant="danger" size="sm">
+                        Delete
+                    </Button>
+                )}
+                {/* <Button type="button" className="w-24" variant="danger">
                     {data.deleted_at ? "Restore" : "Delete"}
-                </Button>
+                </Button> */}
             </div>
         </div>
     );
@@ -78,16 +95,19 @@ export default function Index({ auth, movies, flashMessage }) {
         {
             name: "Title",
             selector: (row) => row.title,
+            sortable: true,
             // width: "350px",
         },
         {
             name: "Year",
             selector: (row) => row.year,
+            sortable: true,
             width: "100px",
         },
         {
             name: "Category",
             selector: (row) => row.category,
+            sortable: true,
             // width: "100px",
         },
         {
@@ -100,6 +120,7 @@ export default function Index({ auth, movies, flashMessage }) {
                 }
             },
             width: "130px",
+            sortable: true,
         },
         {
             name: "Video URL",
@@ -149,7 +170,7 @@ export default function Index({ auth, movies, flashMessage }) {
         <>
             <Head title="Admin Dashboard - Subscription Plan" />
             <Authenticated auth={auth}>
-                <Link href={route("admin.dashboard.subscriptionPlan.create")}>
+                <Link href={route("admin.dashboard.movie.create")}>
                     <Button
                         type="button"
                         className="w-44 mb-4 mt-2 hover:bg-green-500 hover:text-white"
@@ -172,6 +193,15 @@ export default function Index({ auth, movies, flashMessage }) {
                     highlightOnHover
                     sortIcon={true}
                     fixedHeader
+                    //actions export to excel
+                    actions={
+                        <button
+                            className="btn btn-sm btn-info"
+                            onClick={exportToExcel}
+                        >
+                            Export
+                        </button>
+                    }
                     responsive={true}
                     subHeaderWrap
                     subHeader
