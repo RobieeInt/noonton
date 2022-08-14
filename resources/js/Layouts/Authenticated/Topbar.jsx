@@ -58,7 +58,7 @@ export default function Topbar({ name }) {
                                 method="post"
                                 className="transition-all hover:bg-sky-100 p-4"
                             >
-                                Sign Out
+                                Keluar
                             </Link>
                         </div>
                     </div>

@@ -67,4 +67,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserSubscription::class)->wherePaymentStatus('paid')->latest();
     }
+
+    // check role user
+    public function getIsAdminAttribute() {
+        return $this->hasRole('admin');
+    }
 }

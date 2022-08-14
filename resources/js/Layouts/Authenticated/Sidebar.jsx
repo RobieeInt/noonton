@@ -1,7 +1,7 @@
 import { Link } from "@inertiajs/inertia-react";
 import SubscriptionDetail from "./SubscriptionDetail";
 import MenuItem from "./MenuItem";
-import { UserMenu, UserOthers } from "./MenuList";
+import { UserMenu, UserOthers, UserMenuAdmin } from "./MenuList";
 
 export default function Sidebar({ auth }) {
     return (
@@ -14,17 +14,47 @@ export default function Sidebar({ auth }) {
                     <div className="links flex flex-col mt-[60px] h-full gap-[50px]">
                         <div>
                             <div className="text-gray-1 text-sm mb-4">Menu</div>
-                            {UserMenu.map((menu, index) => (
-                                <MenuItem
-                                    key={`${index}-${menu.text}`}
-                                    link={menu.link}
-                                    icon={menu.icon}
-                                    text={menu.text}
-                                    isActive={
-                                        menu.link && route().current(menu.link) //misalkan menu.link = "ada" maka route().current("/") = true
-                                    }
-                                />
-                            ))}
+                            {console.log(auth.whatRole)}
+                            {auth.whatRole === "admin"
+                                ? UserMenuAdmin.map((menu, index) => (
+                                      <MenuItem
+                                          key={`${index}-${menu.text}`}
+                                          link={menu.link}
+                                          icon={menu.icon}
+                                          text={menu.text}
+                                          isActive={
+                                              menu.link &&
+                                              route().current(menu.link) //misalkan menu.link = "ada" maka route().current("/") = true atau menunya aktif
+                                          }
+                                          method={menu.method}
+                                      />
+                                  ))
+                                : auth.whatRole === "user"
+                                ? UserMenu.map((menu, index) => (
+                                      <MenuItem
+                                          key={`${index}-${menu.text}`}
+                                          link={menu.link}
+                                          icon={menu.icon}
+                                          text={menu.text}
+                                          isActive={
+                                              menu.link &&
+                                              route().current(menu.link) //misalkan menu.link = "ada" maka route().current("/") = true
+                                          }
+                                      />
+                                  ))
+                                : UserMenu.map((menu, index) => (
+                                      <MenuItem
+                                          key={`${index}-${menu.text}`}
+                                          link={menu.link}
+                                          icon={menu.icon}
+                                          text={menu.text}
+                                          isActive={
+                                              menu.link &&
+                                              route().current(menu.link) //misalkan menu.link = "ada" maka route().current("/") = true atau menunya aktif
+                                          }
+                                          method={menu.method}
+                                      />
+                                  ))}
                         </div>
                         <div>
                             <div className="text-gray-1 side-link mb-4">
@@ -37,7 +67,7 @@ export default function Sidebar({ auth }) {
                                     icon={menu.icon}
                                     text={menu.text}
                                     isActive={
-                                        menu.link && route().current(menu.link) //misalkan menu.link = "ada" maka route().current("/") = true
+                                        menu.link && route().current(menu.link) //misalkan menu.link = "ada" maka route().current("/") = true atau menunya aktif
                                     }
                                     method={menu.method}
                                 />

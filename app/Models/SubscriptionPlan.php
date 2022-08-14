@@ -14,6 +14,8 @@ class SubscriptionPlan extends Model
         'name',
         'price',
         'active_period_in_month',
+        'is_premium',
+        //json feature
         'features',
     ];
 }

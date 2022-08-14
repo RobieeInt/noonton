@@ -11,7 +11,9 @@ use Illuminate\Http\Request;
 class SubscriptionPlanController extends Controller
 {
     public function index() {
-        $subscriptionPlan = SubscriptionPlan::all();
+        //order by price
+        $subscriptionPlan = SubscriptionPlan::orderBy('price')->get();
+        // $subscriptionPlan = SubscriptionPlan::all();
         // return $subscriptionPlan;
         return Inertia('User/Dashboard/SubscriptionPlan/Index', [
             'subscriptionPlans' => $subscriptionPlan,

@@ -22,7 +22,7 @@ export default function CardMovie({
         <>
             <div className="absolute group overflow-hidden mr-[30px] bg-blend-darken">
                 <img
-                    src={thumbnail}
+                    src={`/storage/${thumbnail}`}
                     className="object-cover rounded-[30px] h-[340px] w-[250px] brightness-50"
                     alt=""
                 />
@@ -30,7 +30,7 @@ export default function CardMovie({
                     <div className="p-[30px] flex items-center gap-1">
                         <img src="/icons/ic_star.svg" alt="" />
                         <span className="text-sm font-medium text-white mt-1">
-                            {rating.toFixed(1)}
+                            {Number(rating).toFixed(1)}
                         </span>
                     </div>
                 </div>
@@ -48,7 +48,7 @@ export default function CardMovie({
                     </div>
                 </div>
                 <div
-                    className="absolute top-1/2 left-1/2 -translate-y-[500px] group-hover:-translate-y-1/2
+                    className="absolute top-1/4 left-1/2 -translate-y-[500px] group-hover:-translate-y-1/2
                                 -translate-x-1/2 z-20 transition ease-in-out duration-500"
                 >
                     <img
