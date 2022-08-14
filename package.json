@@ -25,8 +25,13 @@
     },
     "dependencies": {
         "flickity": "^3.0.0",
+        "moment": "^2.29.4",
         "prop-types": "^15.8.1",
+        "react-data-table-component": "^7.5.2",
+        "react-export-table-to-excel": "^1.0.3",
         "react-flickity-component": "^3.6.2",
-        "react-player": "^2.10.1"
+        "react-player": "^2.10.1",
+        "styled-components": "^5.3.5",
+        "xlsx": "^0.18.5"
     }
 }
