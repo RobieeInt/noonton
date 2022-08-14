@@ -48,7 +48,7 @@ export default function CardMovie({
                     </div>
                 </div>
                 <div
-                    className="absolute top-1/2 left-1/2 -translate-y-[500px] group-hover:-translate-y-1/2
+                    className="absolute top-1/4 left-1/2 -translate-y-[500px] group-hover:-translate-y-1/2
                                 -translate-x-1/2 z-20 transition ease-in-out duration-500"
                 >
                     <img

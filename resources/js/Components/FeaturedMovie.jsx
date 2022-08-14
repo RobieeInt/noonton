@@ -40,13 +40,13 @@ export default function FeaturedMovie({
                 </div>
                 {/* <!-- bottom detail --> */}
 
-                <div className="absolute bottom-0 h-[250px] content-center bg-gradient-to-t from-black justify-between items-center px-7  rounded-bl-[28px] rounded-br-[28px] ">
+                <div className="absolute bottom-0 h-[250px] content-center bg-gradient-to-t justify-between items-center px-7  rounded-bl-[28px] rounded-br-[28px] ">
                     <div className="translate-x-[500px]  text-white group-hover:translate-x-0 transition ease-in-out duration-500">
                         {description}
                     </div>
                 </div>
                 <div
-                    className="absolute bottom-0 h-[100px] left-0 right-0 bg-gradient-to-t from-black rounded-bl-[28px]
+                    className="absolute bottom-0 h-[150px] left-0 right-0 bg-gradient-to-t from-black rounded-bl-[28px]
                                 rounded-br-[28px] flex justify-between items-center px-7 brightness-100"
                 >
                     <div>

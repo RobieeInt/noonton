@@ -46,8 +46,8 @@ class MovieController extends Controller
         $data = $request->validated();
         $data['thumbnail'] = Storage::disk('public')->put('movies', $request->file('thumbnail'));
         $data['slug'] = Str::slug($data['title']);
-        dd($data);
-        // Movie::create($data);
+        // dd($data);
+        Movie::create($data);
         // return $request->all();
 
         return redirect(route('admin.dashboard.movie.index'))->with([
