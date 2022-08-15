@@ -50,11 +50,11 @@ export default function Login({ status, canResetPassword }) {
                         {/* <img src="/images/moonton-white.svg" alt="" /> */}
                         <div className="my-[70px]">
                             <div className="font-semibold text-[26px] mb-3">
-                                Welcome Back
+                                Selamat Datang
                             </div>
                             <p className="text-base text-[#767676] leading-7">
-                                Explore our new movies and get <br />
-                                the better insight for your life
+                                Investasikan Ilmu <br />
+                                Untuk Hidup yang Lebih Baik
                             </p>
                         </div>
 
@@ -69,15 +69,12 @@ export default function Login({ status, canResetPassword }) {
                             <div className="flex flex-col gap-6">
                                 <div>
                                     {/* <label className="text-base block mb-2">Email Address</label> */}
-                                    <Label
-                                        forInput="email"
-                                        value="Email Address"
-                                    />
+                                    <Label forInput="email" value="Email" />
                                     <Input
                                         type="email"
                                         name="email"
                                         value={data.email}
-                                        placeholder={"Enter your email address"}
+                                        placeholder={"Masukkan Alamat Email"}
                                         autoComplete="username"
                                         isFocused={true}
                                         handleChange={onHandleChange}
@@ -86,13 +83,13 @@ export default function Login({ status, canResetPassword }) {
                                 <div>
                                     <Label
                                         forInput="password"
-                                        value="Password"
+                                        value="Kata Sandi"
                                     />
                                     <Input
                                         type="password"
                                         name="password"
                                         value={data.password}
-                                        placeholder={"Enter your password"}
+                                        placeholder={"Masukkan Kata Sandi"}
                                         autoComplete="current-password"
                                         handleChange={onHandleChange}
                                     />
@@ -125,7 +122,7 @@ export default function Login({ status, canResetPassword }) {
                                     variant="primary"
                                 >
                                     <span className="text-base font-semibold">
-                                        Start Watching
+                                        Masuk
                                     </span>
                                 </Button>
 
@@ -135,7 +132,7 @@ export default function Login({ status, canResetPassword }) {
                                         variant="light-outline"
                                     >
                                         <span className="text-base">
-                                            Create New Account
+                                            Buat Akun
                                         </span>
                                     </Button>
                                 </Link>

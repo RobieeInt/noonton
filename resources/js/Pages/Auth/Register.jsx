@@ -46,21 +46,18 @@ export default function Register() {
                         {/* <img src="/images/moonton-white.svg" alt="" /> */}
                         <div className="my-[70px]">
                             <div className="font-semibold text-[26px] mb-3">
-                                Sign Up
+                                Daftar
                             </div>
                             <p className="text-base text-[#767676] leading-7">
-                                Explore our new movies and get <br />
-                                the better insight for your life
+                                Investasikan Ilmu <br />
+                                Untuk Hidup yang Lebih Baik, Hiyaa hiyaa hiyaa
                             </p>
                         </div>
                         <ValidationErrors errors={errors} />
                         <form onSubmit={submit} className="w-[370px]">
                             <div className="flex flex-col gap-6">
                                 <div>
-                                    <Label
-                                        forInput="fullName"
-                                        value="Full Name"
-                                    />
+                                    <Label forInput="fullName" value="Nama" />
                                     <Input
                                         type="text"
                                         name="name"
@@ -75,13 +72,13 @@ export default function Register() {
                                 <div>
                                     <Label
                                         forInput="email"
-                                        value="Email Address"
+                                        value="Alamat Email "
                                     />
                                     <Input
                                         type="email"
                                         name="email"
                                         value={data.email}
-                                        placeholder={"Enter your email address"}
+                                        placeholder={"Masukkan Alamat Email"}
                                         autoComplete="username"
                                         handleChange={onHandleChange}
                                         required
@@ -90,13 +87,13 @@ export default function Register() {
                                 <div>
                                     <Label
                                         forInput="password"
-                                        value="Password"
+                                        value="Kata Sandi"
                                     />
                                     <Input
                                         type="password"
                                         name="password"
                                         value={data.password}
-                                        placeholder={"Enter your password"}
+                                        placeholder={"Masukkan Kata Sandi"}
                                         autoComplete="new-password"
                                         handleChange={onHandleChange}
                                         required
@@ -105,13 +102,13 @@ export default function Register() {
                                 <div>
                                     <Label
                                         forInput="password_confirmation"
-                                        value="Confirm Password"
+                                        value="Konfirmasi Kata Sandi"
                                     />
                                     <Input
                                         type="password"
                                         name="password_confirmation"
                                         value={data.password_confirmation}
-                                        placeholder={"Enter your password"}
+                                        placeholder={"Masukkan Kata Sandi Lagi"}
                                         handleChange={onHandleChange}
                                         required
                                     />
@@ -124,7 +121,7 @@ export default function Register() {
                                     variant="primary"
                                 >
                                     <span className="text-base font-semibold">
-                                        Sign Up
+                                        Daftar
                                     </span>
                                 </Button>
 
@@ -133,7 +130,9 @@ export default function Register() {
                                         type="button"
                                         variant="light-outline"
                                     >
-                                        <span className="text-base">Login</span>
+                                        <span className="text-base">
+                                            Sudah Punya Akun
+                                        </span>
                                     </Button>
                                 </Link>
                             </div>
