@@ -46,7 +46,7 @@ password kamu.')
 @isset($actionText)
 @slot('subcopy')
 @lang(
-"Kalo Kamu Kesulitan dengan \":actionText\" , copy dan paste URL dibawah ini\n".
+"Kalo Kamu Kesulitan dengan tombol \":actionText\" diatas , copy dan paste URL dibawah ini\n".
 'ke browser kamu ya:',
 [
 'actionText' => $actionText,
