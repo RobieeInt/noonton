@@ -16,11 +16,11 @@ export default function SubscriberPlan({ auth, subscriptionPlans }) {
                 <div className="px-[50px]">
                     <div className="py-20 flex flex-col items-center">
                         <div className="text-black font-semibold text-[26px] mb-3">
-                            Pricing for Everyone
+                            Nikmati Akses Videonya
                         </div>
                         <p className="text-base text-gray-1 leading-7 max-w-[302px] text-center">
-                            Invest your little money to get a whole new
-                            experiences from movies.
+                            Investikasikan sedikit uang anda untuk memperkaya
+                            saya ... Please
                         </p>
 
                         {/* <!-- Pricing Card --> */}

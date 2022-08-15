@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\SubscriptionPlan;
-use App\Models\Movie;
 use Illuminate\Http\Request;
 use App\Http\Requests\Admin\SubscriptionPlan\Store;
+use App\Http\Requests\Admin\SubscriptionPlan\Update;
 
 
 class SubscriptionPlanController extends Controller
@@ -48,11 +48,12 @@ class SubscriptionPlanController extends Controller
         //save array to json
         // dd($data);
         $data['features'] = json_encode($data['features']);
+        // dd($data);
         SubscriptionPlan::create($data);
         // return $request->all();
         return redirect(route('admin.dashboard.subscriptionPlan.index'))->with([
             'type' => 'success',
-            'message' => 'Subscription Plan Berhasil Dibuat !'
+            'message' => 'Paket Berlangganan Berhasil Dibuat !'
         ]);
     }
 
@@ -75,7 +76,9 @@ class SubscriptionPlanController extends Controller
      */
     public function edit(SubscriptionPlan $subscriptionPlan)
     {
-        //
+        return inertia('Admin/SubscriptionPlan/Edit', [
+            'subscriptionPlan' => $subscriptionPlan,
+        ]);
     }
 
     /**
@@ -85,9 +88,19 @@ class SubscriptionPlanController extends Controller
      * @param  \App\Models\SubscriptionPlan  $subscriptionPlan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SubscriptionPlan $subscriptionPlan)
+    public function update(Update $request, SubscriptionPlan $subscriptionPlan)
     {
-        //
+        $data = $request->validated();
+        //save array to json
+        // $data['features'] = json_encode($data['features']);
+        // gause di encode lagi kalo update
+        // dd($data);
+        $subscriptionPlan->update($data);
+        // return $request->all();
+        return redirect(route('admin.dashboard.subscriptionPlan.index'))->with([
+            'type' => 'success',
+            'message' => 'Paket Berlangganan Berhasil Diupdate !'
+        ]);
     }
 
     /**
@@ -101,7 +114,7 @@ class SubscriptionPlanController extends Controller
         $subscriptionPlan->delete();
         return redirect()->back()->with([
             'type' => 'success',
-            'message' => 'Subscription Plan Berhasil Dihapus !'
+            'message' => 'Paket Berlangganan Berhasil Dihapus !'
         ]);
     }
 
@@ -111,7 +124,7 @@ class SubscriptionPlanController extends Controller
         $subscriptionPlan->restore();
         return redirect()->back()->with([
             'type' => 'success',
-            'message' => 'Subscription Plan Berhasil Dikembalikan !'
+            'message' => 'Paket Berlangganan Berhasil Dikembalikan !'
         ]);
     }
 }

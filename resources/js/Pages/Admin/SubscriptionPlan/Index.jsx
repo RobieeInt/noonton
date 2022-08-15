@@ -13,6 +13,8 @@ export default function Index({ auth, subscriptionPlan, flashMessage }) {
     const ExpandedComponent = ({ data }) => (
         <div className="text-center">
             <div>
+                {/* Is Premium */}
+
                 <h3 className="text-green-600">
                     <strong>Fitur</strong>
                 </h3>
@@ -75,29 +77,15 @@ export default function Index({ auth, subscriptionPlan, flashMessage }) {
             price: plan.price,
             duration: plan.active_period_in_month,
             features: plan.features,
+            premium: plan.is_premium,
             created_at: plan.created_at,
             deleted_at: plan.deleted_at,
+            updated_at: plan.updated_at,
         };
     });
 
     //columns to display
     const columns = [
-        {
-            name: "Title",
-            selector: (row) => row.title,
-            sortable: true,
-        },
-        {
-            name: "Price",
-            selector: (row) => row.price,
-            sortable: true,
-        },
-        {
-            name: "Durasi / Bulan",
-            //date format
-            selector: (row) => row.duration,
-            sortable: true,
-        },
         {
             name: "Action",
             cell: (row) => (
@@ -109,6 +97,27 @@ export default function Index({ auth, subscriptionPlan, flashMessage }) {
                     Edit
                 </Link>
             ),
+        },
+        {
+            name: "Nama Paket",
+            selector: (row) => row.title,
+            sortable: true,
+        },
+        {
+            name: "Harga",
+            selector: (row) => row.price,
+            sortable: true,
+        },
+        {
+            name: "Durasi / Bulan",
+            //date format
+            selector: (row) => row.duration,
+            sortable: true,
+        },
+        {
+            name: "Premium",
+            selector: (row) => row.premium,
+            sortable: true,
         },
     ];
 
@@ -134,6 +143,8 @@ export default function Index({ auth, subscriptionPlan, flashMessage }) {
                 price: item.price,
                 duration: item.duration,
                 features: item.features,
+                //Ternary operator buat ngecek apakah premium atau bukan
+                premium: item.premium == true ? "Ya" : "Tidak",
                 created_at: item.created_at,
                 deleted_at: item.deleted_at,
             };
@@ -145,7 +156,7 @@ export default function Index({ auth, subscriptionPlan, flashMessage }) {
 
     return (
         <>
-            <Head title="Admin Dashboard - Subscription Plan" />
+            <Head title="Admin Dashboard - Paket Berlangganan" />
             <Authenticated auth={auth}>
                 <Link href={route("admin.dashboard.subscriptionPlan.create")}>
                     <Button

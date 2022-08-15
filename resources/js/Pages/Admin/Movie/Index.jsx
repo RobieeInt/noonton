@@ -168,7 +168,7 @@ export default function Index({ auth, movies, flashMessage }) {
 
     return (
         <>
-            <Head title="Admin Dashboard - Subscription Plan" />
+            <Head title="Admin Dashboard - Paket Berlangganan" />
             <Authenticated auth={auth}>
                 <Link href={route("admin.dashboard.movie.create")}>
                     <Button

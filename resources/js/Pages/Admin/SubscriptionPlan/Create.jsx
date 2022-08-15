@@ -22,6 +22,9 @@ export default function Create({ auth }) {
             event.target.name === "features"
                 ? event.target.value.split(",")
                 : event.target.value
+            // event.target.type === "checkbox"
+            //     ? event.target.checked
+            //     : event.target.value
         );
     };
 

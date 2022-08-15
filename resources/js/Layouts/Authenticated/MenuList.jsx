@@ -19,7 +19,7 @@ const UserMenu = [
                 </g>
             </svg>
         ),
-        text: "Discover",
+        text: "Beranda",
     },
     {
         link: null,
@@ -38,7 +38,7 @@ const UserMenu = [
                 />
             </svg>
         ),
-        text: "Your Favorites",
+        text: "Favorit",
     },
     {
         link: null,
@@ -101,7 +101,7 @@ const UserMenuAdmin = [
                 />
             </svg>
         ),
-        text: "Subscription Plan",
+        text: "Paket Berlangganan",
     },
 ];
 
@@ -123,7 +123,7 @@ const UserOthers = [
                 />
             </svg>
         ),
-        text: "Payments",
+        text: "Paket",
     },
     // {
     //     link: null,

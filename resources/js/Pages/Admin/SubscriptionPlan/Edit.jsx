@@ -7,9 +7,9 @@ import { Link, Head, useForm } from "@inertiajs/inertia-react";
 import ValidationErrors from "@/Components/ValidationErrors";
 import { Inertia } from "@inertiajs/inertia";
 
-export default function Edit({ auth, movie }) {
+export default function Edit({ auth, subscriptionPlan }) {
     const { data, setData, processing, errors } = useForm({
-        ...movie, //ambil semua data movie
+        ...subscriptionPlan, //ambil semua data subscriptionPlan
     });
 
     const onHandleChange = (event) => {
@@ -18,8 +18,9 @@ export default function Edit({ auth, movie }) {
             // event.target.type === "checkbox"
             //     ? event.target.checked
             //     : event.target.value,
-            event.target.type === "file"
-                ? event.target.files[0]
+            //array of features
+            event.target.name === "features"
+                ? event.target.value.split(",")
                 : event.target.value
         );
     };
@@ -28,133 +29,98 @@ export default function Edit({ auth, movie }) {
         e.preventDefault();
 
         //cek thumnail biar ga duplikat
-        if (data.thumbnail === movie.thumbnail) {
+        if (data.thumbnail === subscriptionPlan.thumbnail) {
             delete data.thumbnail;
         }
 
-        Inertia.post(route("admin.dashboard.movie.update", movie.id), {
-            ...data,
-            _method: "PUT",
-        });
+        Inertia.post(
+            route(
+                "admin.dashboard.subscriptionPlan.update",
+                subscriptionPlan.id
+            ),
+            {
+                ...data,
+                _method: "PUT",
+            }
+        );
     };
     return (
         <>
-            <Head title="Admin Update Movie" />
+            <Head title="Admin Update subscriptionPlan" />
             <Authenticated auth={auth}>
-                <h1 className="text-xl mt-4">Update Film : {movie.title} </h1>
+                <h1 className="text-xl mt-4">
+                    Update Paket : {subscriptionPlan.name}{" "}
+                </h1>
                 <hr className="mb-4" />
 
                 {/* Error validasi */}
                 <ValidationErrors errors={errors} />
 
                 <form onSubmit={submit}>
-                    <Label forInput="title" value="title" className="mt-4" />
+                    <Label forInput="name" value="name" className="mt-4" />
                     <Input
-                        defaultValue={movie.title}
                         className="mb-5"
-                        placeholder="Update Judul Filmnya"
+                        placeholder="Masukin Nama Paket"
+                        defaultValue={subscriptionPlan.name}
                         type="text"
-                        name="title"
+                        name="name"
                         variant="primary-outline"
                         handleChange={onHandleChange}
-                        isError={errors.title}
+                        isError={errors.name}
+                    />
+                    <Label forInput="price" value="price" className="mt-4" />
+                    <Input
+                        className="mb-5"
+                        defaultValue={subscriptionPlan.price}
+                        placeholder="Masukin Harga Paket"
+                        type="text"
+                        name="price"
+                        variant="primary-outline"
+                        handleChange={onHandleChange}
+                        isError={errors.price}
                     />
                     <Label
-                        forInput="description"
-                        value="description"
+                        forInput="features"
+                        value="features"
+                        className="mt-4"
+                    />
+                    {/* input array */}
+                    <Input
+                        className="mb-5"
+                        placeholder="Masukin Fitur Paket, dipisahkan dengan koma"
+                        defaultValue={JSON.parse(subscriptionPlan.features)}
+                        type="text"
+                        name="features"
+                        variant="primary-outline"
+                        handleChange={onHandleChange}
+                        isError={errors.features}
+                    />
+                    <Label
+                        forInput="active_period_in_month"
+                        value="active_period_in_month"
                         className="mt-4"
                     />
                     <Input
-                        defaultValue={movie.description}
-                        className="mb-5"
-                        placeholder="Masukin Deskripsi Filmnya"
-                        type="text"
-                        name="description"
-                        variant="primary-outline"
-                        handleChange={onHandleChange}
-                        isError={errors.description}
-                    />
-                    <Label forInput="year" value="year" className="mt-4" />
-                    <Input
-                        defaultValue={movie.year}
-                        className="mb-5"
-                        placeholder="Masukin Tahun Filmnya"
-                        type="text"
-                        name="year"
-                        variant="primary-outline"
-                        handleChange={onHandleChange}
-                        isError={errors.year}
-                    />
-                    <Label
-                        forInput="category"
-                        value="category"
-                        className="mt-4"
-                    />
-                    <Input
-                        defaultValue={movie.category}
-                        className="mb-5"
-                        placeholder="Masukin Judul Filmnya"
-                        type="text"
-                        name="category"
-                        variant="primary-outline"
-                        handleChange={onHandleChange}
-                        isError={errors.category}
-                    />
-                    <Label
-                        forInput="video_url"
-                        value="video_url"
-                        className="mt-4"
-                    />
-                    <Input
-                        defaultValue={movie.video_url}
-                        className="mb-5"
-                        placeholder="Masukin Url Filmnya"
-                        type="text"
-                        name="video_url"
-                        variant="primary-outline"
-                        handleChange={onHandleChange}
-                        isError={errors.video_url}
-                    />
-                    <Label
-                        forInput="thumbnail"
-                        value="thumbnail"
-                        className="mt-4"
-                    />
-                    <img
-                        src={`/storage/${movie.thumbnail}`}
-                        className="w-40 rounded-md"
-                        alt=""
-                    />
-                    <Input
-                        placeholder="Masukin thumbnaiL Filmnya"
-                        type="file"
-                        name="thumbnail"
-                        variant="primary-outline"
-                        handleChange={onHandleChange}
-                        isError={errors.thumbnail}
-                    />
-                    <Label forInput="rating" value="rating" className="mt-4" />
-                    <Input
-                        defaultValue={movie.rating}
-                        placeholder="Masukin rating Filmnya"
+                        placeholder="Masukin active_period_in_month"
                         type="number"
-                        name="rating"
+                        defaultValue={subscriptionPlan.active_period_in_month}
+                        name="active_period_in_month"
                         variant="primary-outline"
                         handleChange={onHandleChange}
-                        isError={errors.rating}
+                        isError={errors.active_period_in_month}
                     />
                     <div className="flex flex-row mt-4 items-center">
                         <Label
-                            forInput="is_featured"
-                            value="Daftar Atas ?"
+                            forInput="is_premium"
+                            value="Premium ?"
                             className="mt-4 mr-3"
                         />
                         <Checkbox
-                            name="is_featured"
+                            name="is_premium"
+                            checked={data.is_premium}
                             handleChange={(e) =>
-                                setData("is_featured", e.target.checked)
+                                setData("is_premium", e.target.checked)
                             }
-                            checked={movie.is_featured}
                         />
                     </div>
                     <Button
