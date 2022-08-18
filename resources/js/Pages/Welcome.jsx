@@ -50,13 +50,13 @@ export default function Welcome(props) {
                                 {/* //Link to login page */}
                                 <Link
                                     href={route("login")}
-                                    className="inline-block text-blue-300 no-underline hover:text-green-500 hover:text-underline text-center h-10 p-2 md:h-auto md:p-4 transform hover:scale-125 duration-300 ease-in-out"
+                                    className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-green-500 via-yellow-200 to-green-400 no-underline hover:text-green-500 hover:text-underline text-center h-10 p-2 md:h-auto md:p-4 transform hover:scale-125 duration-300 ease-in-out"
                                 >
                                     Masuk
                                 </Link>
                                 <Link
                                     href={route("register")}
-                                    className="inline-block text-blue-300 no-underline hover:text-green-500 hover:text-underline text-center h-10 p-2 md:h-auto md:p-4 transform hover:scale-125 duration-300 ease-in-out"
+                                    className="inline-block bg-clip-text text-transparent bg-gradient-to-r from-green-500 via-yellow-200 to-green-400 hover:text-green-500 hover:text-underline text-center h-10 p-2 md:h-auto md:p-4 transform hover:scale-125 duration-300 ease-in-out"
                                 >
                                     Daftar
                                 </Link>

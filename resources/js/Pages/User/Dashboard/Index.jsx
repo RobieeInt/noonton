@@ -26,8 +26,8 @@ export default function Dashboard({ auth, featuredMovies, movies }) {
             </Head>
             <Authenticated auth={auth}>
                 <div>
-                    <div className="font-semibold text-[22px] text-black mb-4 mt-5">
-                        Featured Video
+                    <div className="font-semibold text-[22px] text-black  mb-4 mt-5">
+                        Video Baru yang bisa Kamu lihat di sini
                     </div>
                     <Flickity className="gap-[30px]" options={flickityOptions}>
                         {featuredMovies.map((featuredMovie) => (
@@ -46,7 +46,7 @@ export default function Dashboard({ auth, featuredMovies, movies }) {
                 </div>
                 <div className="mt-[50px]">
                     <div className="font-semibold text-[22px] text-black mb-4">
-                        Browse
+                        Lihat Video Lainnya
                     </div>
                     <Flickity className="gap-[30px]" options={flickityOptions}>
                         {movies.map((movie) => (

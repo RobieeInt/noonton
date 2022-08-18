@@ -109,7 +109,7 @@ export default function Index({ auth, movies, flashMessage }) {
         },
         {
             name: "Daftar Atas",
-            selector: (row) => row.is_featured,
+            selector: (row) => row.featured,
             width: "130px",
             sortable: true,
         },
@@ -131,7 +131,7 @@ export default function Index({ auth, movies, flashMessage }) {
             thumbnail: movie.thumbnail,
             deleted_at: movie.deleted_at,
             //Ternary operator buat ngecek apakah daftaratas atau bukan
-            is_featured: movie.is_featured == true ? "Ya" : "Nggak",
+            is_featured: movie.is_featured,
 
             id: movie.id,
         };
@@ -170,7 +170,7 @@ export default function Index({ auth, movies, flashMessage }) {
                 thumbnail: item.thumbnail,
                 deleted_at: item.deleted_at,
                 //Ternary operator buat ngecek apakah daftaratas atau bukan
-                is_featured: item.is_featured == true ? "Ya" : "Nggak",
+                featured: item.is_featured == true ? "Ya" : "Nggak",
                 id: item.id,
             };
         })

@@ -20,10 +20,23 @@ export default function Authenticated({ auth, children }) {
                 {/* Akhir Konten */}
             </div>
 
-            <div className="mx-auto px-4 w-full h-screen lg:hidden flex bg-black">
-                <div className="text-white text-2xl text-center leading-snug font-medium my-auto">
+            <div className="mx-auto px-4 w-full h-screen lg:hidden flex ">
+                {/* <div className="text-white text-2xl text-center leading-snug font-medium my-auto">
                     Sorry, this page only supported on 1024px screen or above
+                </div> */}
+                {/* Awal Sidebar */}
+                {/* <Sidebar auth={auth} /> */}
+                {/* Akhir Sidebar */}
+
+                {/* Awal Konten */}
+                <div className="  ">
+                    <div className="flex flex-col gap-[50px]"></div>
+                    {/* Awal Topbar */}
+                    {/* <Topbar name={auth.user.name} /> */}
+                    {/* Akhir Topbar */}
+                    <main>{children}</main>
                 </div>
+                {/* Akhir Konten */}
             </div>
         </>
     );

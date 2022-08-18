@@ -13,7 +13,7 @@ export default function SubscriptionCard({
         <>
             {/* <!-- Basic --> */}
             {isPremium === "1" ? (
-                <div className="flex flex-col gap-[30px] py-[30px] px-7 outline outline-1 outline-[#F1F1F1] rounded-[26px] text-white w-[300px] bg-black h-[max-content]">
+                <div className="flex flex-col gap-[30px] py-[30px] px-7 outline outline-1 outline-[#F1F1F1] rounded-[26px] text-white w-[300px] bg-black h-[max-content] mb-2 mt-2">
                     {/* <!-- Ornament Icon --> */}
                     <div className="bg-green-600 rounded-full p-[13px] max-w-max">
                         <img src="/icons/ic_star.svg" width="24" alt="" />
