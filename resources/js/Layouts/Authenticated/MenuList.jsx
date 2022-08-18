@@ -146,7 +146,8 @@ const UserOthers = [
     //     text: "Analytics",
     // },
     {
-        link: null,
+        //route to userProfile
+        link: "userProfile",
         icon: (
             <svg
                 width="24"

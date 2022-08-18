@@ -57,11 +57,19 @@ export default function Index({ auth, subscriptionPlan, flashMessage }) {
                 }}
             >
                 {data.deleted_at ? (
-                    <Button color="green" size="sm">
+                    <Button
+                        color="green"
+                        className="hover:bg-green-500 hover:text-black"
+                        size="sm"
+                    >
                         Restore
                     </Button>
                 ) : (
-                    <Button variant="danger" size="sm">
+                    <Button
+                        variant="danger"
+                        className="hover:bg-red-500 hover:text-black"
+                        size="sm"
+                    >
                         Delete
                     </Button>
                 )}
@@ -144,7 +152,7 @@ export default function Index({ auth, subscriptionPlan, flashMessage }) {
                 duration: item.duration,
                 features: item.features,
                 //Ternary operator buat ngecek apakah premium atau bukan
-                premium: item.premium == true ? "Ya" : "Tidak",
+                premium: item.premium == true ? "Ya" : "Nggak",
                 created_at: item.created_at,
                 deleted_at: item.deleted_at,
             };

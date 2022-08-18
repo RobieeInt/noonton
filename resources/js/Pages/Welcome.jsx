@@ -5,7 +5,7 @@ export default function Welcome(props) {
     return (
         <>
             <Head title="Welcome" />
-            <div className="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center sm:pt-0">
+            <div className="relative flex items-top justify-center min-h-screen bg-black dark:bg-gray-900 sm:items-center sm:pt-0">
                 {/* <div className="fixed top-0 right-0 px-6 py-4 sm:block">
                     {props.auth.user ? (
                         <Link
@@ -33,20 +33,20 @@ export default function Welcome(props) {
                     )}
                 </div> */}
                 {/* // landing page content */}
-                <div class="h-full">
+                <div className="h-full">
                     {/* <!--Nav--> */}
-                    <div class="w-full container mx-auto">
-                        <div class="w-full flex items-center justify-between">
+                    <div className="w-full container mx-auto">
+                        <div className="w-full flex items-center justify-between">
                             <Link
                                 href={route("login")}
                                 className="flex items-center text-indigo-400 no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
                             >
-                                <span class="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-yellow-200 to-green-200">
+                                <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-yellow-200 to-green-200">
                                     Robby Hernowo
                                 </span>
                             </Link>
 
-                            <div class="flex w-1/2 justify-end content-center">
+                            <div className="flex w-1/2 justify-end content-center">
                                 {/* //Link to login page */}
                                 <Link
                                     href={route("login")}
@@ -65,23 +65,23 @@ export default function Welcome(props) {
                     </div>
 
                     {/* <!--Main--> */}
-                    <div class="container pt-24 md:pt-36 mx-auto flex flex-wrap flex-col md:flex-row items-center">
+                    <div className="container pt-24 md:pt-36 mx-auto flex flex-wrap flex-col md:flex-row sm:items-center items-center">
                         {/* <!--Left Col--> */}
-                        <div class="flex flex-col w-full xl:w-2/5 justify-center lg:items-start overflow-y-hidden">
-                            <h1 class="my-4 text-3xl md:text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left">
-                                <span class="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-yellow-200 to-green-200">
+                        <div className="flex flex-col w-full xl:w-2/5 justify-center  sm:content-center overflow-y-hidden">
+                            <h1 className="my-4 text-3xl md:text-5xl text-white opacity-75 font-bold leading-tight text-center md:text-left">
+                                <span className="bg-clip-text text-transparent bg-gradient-to-r from-green-400 via-yellow-200 to-green-200">
                                     Hallo World
                                 </span>
                             </h1>
-                            <p class="leading-normal text-base md:text-2xl text-white mb-8 text-center md:text-left">
+                            <p className="leading-normal text-base md:text-2xl text-white mb-8 text-center md:text-left">
                                 I'm a full-stack web developer and a self-taught
                                 programmer.
                             </p>
-
-                            <div class="flex items-center justify-between pt-4">
+                            {/* //div button login */}
+                            <div className="flex  pt-4 justify-center">
                                 <Link
                                     href={route("login")}
-                                    className="bg-gradient-to-r from-green-400 to to-yellow-700 hover:from-green-500 hover:to-yellow-600 text-white font-bold py-2 px-4 rounded focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
+                                    className=" bg-gradient-to-r from-green-400 to to-yellow-700 hover:from-green-500 hover:to-yellow-600 text-white font-bold py-2 px-3 rounded focus:ring transform transition hover:scale-105 duration-300 ease-in-out"
                                 >
                                     Get started
                                 </Link>
@@ -89,24 +89,24 @@ export default function Welcome(props) {
                         </div>
 
                         {/* <!--Right Col--> */}
-                        <div class="w-full xl:w-3/5 p-12 overflow-hidden">
+                        <div className="w-full xl:w-3/5 p-12 overflow-hidden">
                             <img
-                                class="mx-auto w-full md:w-4/5 transform -rotate-6 transition hover:scale-105 duration-700 ease-in-out hover:rotate-6"
+                                className="mx-auto w-full md:w-4/5 transform -rotate-6 transition hover:scale-105 duration-700 ease-in-out hover:rotate-6"
                                 src="/images/hola.png"
                             />
                         </div>
 
                         {/* <!--Footer--> */}
-                        <div class="w-full pt-16 pb-6 text-sm text-center md:text-left fade-in">
+                        <div className="w-full pt-16 pb-6 text-sm text-center md:text-left fade-in">
                             <a
-                                class="text-gray-500 no-underline hover:no-underline"
+                                className="text-gray-500 no-underline hover:no-underline"
                                 href="#"
                             >
                                 &copy; App 2020
                             </a>
-                            - Template by
+                            <br />
                             <a
-                                class="text-gray-500 no-underline hover:no-underline"
+                                className="text-gray-500 no-underline hover:no-underline"
                                 href="https://www.robbyhernowo.com"
                             >
                                 Robby Hernowo

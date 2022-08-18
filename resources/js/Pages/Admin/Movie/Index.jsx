@@ -10,14 +10,6 @@ export default function Index({ auth, movies, flashMessage }) {
     const [Search, setSearch] = useState("");
     const [filteredTitle, setFilteredTitle] = useState([]);
 
-    //datatable export excel
-    const exportToExcel = () => {
-        const ws = XLSX.utils.json_to_sheet(movies);
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "SheetJS");
-        XLSX.writeFile(wb, "movies.xlsx");
-    };
-
     //expand image, description & delete button
     const ExpandedComponent = ({ data }) => (
         <div className="text-center">
@@ -51,17 +43,22 @@ export default function Index({ auth, movies, flashMessage }) {
                 }}
             >
                 {data.deleted_at ? (
-                    <Button color="green" size="sm">
+                    <Button
+                        color="green"
+                        className="hover:bg-green-500 hover:text-black"
+                        size="sm"
+                    >
                         Restore
                     </Button>
                 ) : (
-                    <Button variant="danger" size="sm">
+                    <Button
+                        variant="danger"
+                        className="hover:bg-red-500 hover:text-black"
+                        size="sm"
+                    >
                         Delete
                     </Button>
                 )}
-                {/* <Button type="button" className="w-24" variant="danger">
-                    {data.deleted_at ? "Restore" : "Delete"}
-                </Button> */}
             </div>
         </div>
     );
@@ -112,13 +109,7 @@ export default function Index({ auth, movies, flashMessage }) {
         },
         {
             name: "Daftar Atas",
-            selector: (row) => {
-                if (row.is_featured === 1) {
-                    return "Ya";
-                } else {
-                    return "Tidak";
-                }
-            },
+            selector: (row) => row.is_featured,
             width: "130px",
             sortable: true,
         },
@@ -129,6 +120,7 @@ export default function Index({ auth, movies, flashMessage }) {
         },
     ];
 
+    //map data to display
     const data = movies.map((movie) => {
         return {
             title: movie.title,
@@ -138,33 +130,56 @@ export default function Index({ auth, movies, flashMessage }) {
             video_url: movie.video_url,
             thumbnail: movie.thumbnail,
             deleted_at: movie.deleted_at,
-            is_featured: movie.is_featured,
+            //Ternary operator buat ngecek apakah daftaratas atau bukan
+            is_featured: movie.is_featured == true ? "Ya" : "Nggak",
 
             id: movie.id,
         };
     });
 
-    //filter title, description, category
-    // const filteredData = data.filter((movie) => {
-    //     return (
-    //         movie.title.toLowerCase().includes(Search.toLowerCase()) ||
-    //         movie.description.toLowerCase().includes(Search.toLowerCase()) ||
-    //         movie.category.toLowerCase().includes(Search.toLowerCase())
-    //     );
-    // });
+    //useeffect to filter by title, description, category, year, kalo pake ini kaga ngerefresh tablenya
+    // useEffect(() => {
+    //     const result = data.filter((item) => {
+    //         return (
+    //             item.title.toLowerCase().includes(Search.toLowerCase()) ||
+    //             item.description.toLowerCase().includes(Search.toLowerCase()) ||
+    //             item.category.toLowerCase().includes(Search.toLowerCase()) ||
+    //             item.year.toString().toLowerCase().match(Search.toLowerCase()) //tahun di convert dlu jadi string
+    //         );
+    //     });
+    //     setFilteredTitle(result);
+    // }, [Search]);
 
-    //useeffect to filter by title, description, category, year
-    useEffect(() => {
-        const result = data.filter((item) => {
+    //filtered data dan refresh tabelnya
+    const filteredData = data
+        .filter((item) => {
             return (
                 item.title.toLowerCase().includes(Search.toLowerCase()) ||
                 item.description.toLowerCase().includes(Search.toLowerCase()) ||
                 item.category.toLowerCase().includes(Search.toLowerCase()) ||
                 item.year.toString().toLowerCase().match(Search.toLowerCase()) //tahun di convert dlu jadi string
             );
-        });
-        setFilteredTitle(result);
-    }, [Search]);
+        })
+        .map((item) => {
+            return {
+                title: item.title,
+                year: item.year,
+                category: item.category,
+                description: item.description,
+                video_url: item.video_url,
+                thumbnail: item.thumbnail,
+                deleted_at: item.deleted_at,
+                //Ternary operator buat ngecek apakah daftaratas atau bukan
+                is_featured: item.is_featured == true ? "Ya" : "Nggak",
+                id: item.id,
+            };
+        })
+        .sort((a, b) => {
+            return a.id - b.id;
+        })
+        .reverse();
+
+    // console.log(filteredData);
 
     return (
         <>
@@ -184,7 +199,7 @@ export default function Index({ auth, movies, flashMessage }) {
                 )}
                 <DataTable
                     columns={columns}
-                    data={filteredTitle}
+                    data={filteredData}
                     expandableRows
                     expandOnRowClicked={true}
                     expandableRowsComponent={ExpandedComponent}
@@ -193,15 +208,6 @@ export default function Index({ auth, movies, flashMessage }) {
                     highlightOnHover
                     sortIcon={true}
                     fixedHeader
-                    //actions export to excel
-                    actions={
-                        <button
-                            className="btn btn-sm btn-info"
-                            onClick={exportToExcel}
-                        >
-                            Export
-                        </button>
-                    }
                     responsive={true}
                     subHeaderWrap
                     subHeader
