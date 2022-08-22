@@ -10,6 +10,7 @@ use App\Http\Controllers\User\SubscriptionPlanController;
 use App\Http\Controllers\Admin\MovieController as AdminMovieController;
 use App\Http\Controllers\Admin\SubscriptionPlanController as AdminSubscriptionPlanController;
 use App\Http\Controllers\UserProfileController;
+use App\Models\SubscriptionPlan;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,7 +47,9 @@ Route::get('/', function () {
 Route::get('/userprofile', [UserProfileController::class, 'index'])->name('userProfile');
 
 
-//middleware all user
+//MIDTRANS ROUTE
+Route::post('midtrans/notification', [SubscriptionPlanController::class, 'midtransCallback'])->name('midtrans.notification');
+//midtrans bakalan gagal hit project karena kudu lewatin validasi dari laravel CRSF abaikan di App/http/middleware/verifyCSRFToken.php
 
 
 
