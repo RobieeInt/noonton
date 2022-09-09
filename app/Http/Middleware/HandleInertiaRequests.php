@@ -94,6 +94,7 @@ class HandleInertiaRequests extends Middleware
             ],
             'env' => [
                 'MIDTRANS_CLIENTKEY' => env('MIDTRANS_CLIENTKEY'),
+                'WhatKey' => env('MIDTRANS_CLIENTKEY'),
             ],
             'ziggy' => function () use ($request) {
                 return array_merge((new Ziggy)->toArray(), [

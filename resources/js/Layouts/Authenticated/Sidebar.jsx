@@ -3,7 +3,8 @@ import SubscriptionDetail from "./SubscriptionDetail";
 import MenuItem from "./MenuItem";
 import { UserMenu, UserOthers, UserMenuAdmin } from "./MenuList";
 
-export default function Sidebar({ auth }) {
+export default function Sidebar({ auth, subscriptionPlans, env }) {
+    // console.log(env.WhatKey);
     return (
         <>
             <aside className="fixed z-50 w-[300px] h-full">
@@ -14,7 +15,7 @@ export default function Sidebar({ auth }) {
                     <div className="links flex flex-col mt-[60px] h-full gap-[50px]">
                         <div>
                             <div className="text-gray-1 text-sm mb-4">Menu</div>
-                            {console.log(auth.whatRole)}
+                            {/* {console.log(auth.whatRole)} */}
                             {auth.whatRole === "admin"
                                 ? UserMenuAdmin.map((menu, index) => (
                                       <MenuItem

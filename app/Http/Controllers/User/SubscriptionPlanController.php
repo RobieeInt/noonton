@@ -103,7 +103,7 @@ class SubscriptionPlanController extends Controller
             else if ($fraud == 'accept') {
                 // TODO Set payment status in merchant's database to 'success'
                 $userSubscription->payment_status = 'paid';
-                $userSubscription->expired_date = Carbon::now()->addMonths((int) $userSubscription->subscriptionPlan->active_period_in_months);
+                $userSubscription->expired_date = Carbon::now()->addMonths((int) $userSubscription->subscriptionPlan->active_period_in_month);
             }
         }
         else if ($transaction_status == 'cancel') {
@@ -123,7 +123,7 @@ class SubscriptionPlanController extends Controller
         else if ($transaction_status == 'settlement') {
             // TODO set payment status in merchant's database to 'Settlement'
             $userSubscription->payment_status = 'paid';
-            $userSubscription->expired_date = Carbon::now()->addMonths((int) $userSubscription->subscriptionPlan->active_period_in_months);
+            $userSubscription->expired_date = Carbon::now()->addMonths((int) $userSubscription->subscriptionPlan->active_period_in_month);
         }
         else if ($transaction_status == 'pending') {
             // TODO set payment status in merchant's database to 'Pending'

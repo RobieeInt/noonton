@@ -13,6 +13,8 @@ export default function SubscriberPlan({ auth, subscriptionPlans, env }) {
             {
                 only: ["userSubscription"],
                 onSuccess: ({ props }) => {
+                    console.log({ props });
+                    console.log(env.WhatKey);
                     onSnapMidtrans(props.userSubscription);
                 },
             }
