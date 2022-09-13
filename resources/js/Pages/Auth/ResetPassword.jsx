@@ -1,22 +1,22 @@
-import React, { useEffect } from 'react';
-import Button from '@/Components/Button';
-import Guest from '@/Layouts/Guest';
-import Input from '@/Components/Input';
-import Label from '@/Components/Label';
-import ValidationErrors from '@/Components/ValidationErrors';
-import { Head, useForm } from '@inertiajs/inertia-react';
+import React, { useEffect } from "react";
+import Button from "@/Components/Button";
+import Guest from "@/Layouts/Guest";
+import Input from "@/Components/Input";
+import Label from "@/Components/Label";
+import ValidationErrors from "@/Components/ValidationErrors";
+import { Head, useForm } from "@inertiajs/inertia-react";
 
 export default function ResetPassword({ token, email }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         token: token,
         email: email,
-        password: '',
-        password_confirmation: '',
+        password: "",
+        password_confirmation: "",
     });
 
     useEffect(() => {
         return () => {
-            reset('password', 'password_confirmation');
+            reset("password", "password_confirmation");
         };
     }, []);
 
@@ -27,7 +27,7 @@ export default function ResetPassword({ token, email }) {
     const submit = (e) => {
         e.preventDefault();
 
-        post(route('password.update'));
+        post(route("password.update"));
     };
 
     return (
@@ -51,7 +51,7 @@ export default function ResetPassword({ token, email }) {
                 </div>
 
                 <div className="mt-4">
-                    <Label forInput="password" value="Password" />
+                    <Label forInput="password" value="Kata Sandi" />
 
                     <Input
                         type="password"
@@ -65,7 +65,10 @@ export default function ResetPassword({ token, email }) {
                 </div>
 
                 <div className="mt-4">
-                    <Label forInput="password_confirmation" value="Confirm Password" />
+                    <Label
+                        forInput="password_confirmation"
+                        value="Konfirmasi Kata Sandi"
+                    />
 
                     <Input
                         type="password"
@@ -78,8 +81,8 @@ export default function ResetPassword({ token, email }) {
                 </div>
 
                 <div className="flex items-center justify-end mt-4">
-                    <Button className="ml-4" processing={processing}>
-                        Reset Password
+                    <Button className="" processing={processing}>
+                        Reset Kata Sandi
                     </Button>
                 </div>
             </form>
